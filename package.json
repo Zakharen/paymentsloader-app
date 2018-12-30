@@ -1,0 +1,19 @@
+{
+  "name": "paymentsloader-app",
+  "version": "1.0.0",
+  "description": "Payments loader application",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd frontend && ng serve",
+    "server": "cd backend && npm run serve",
+    "serve": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "keywords": [
+    "Huspi"
+  ],
+  "author": "Huspi",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
