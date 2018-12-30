@@ -19,11 +19,6 @@ export class PaymentsService {
    */
   public getPayments() {
     const self = this;
-    return self.http.get(`${self.apiUrl}Payment/GetPaymentsData`);
-  }
-
-  public apiTestCall() {
-    const self = this;
-    return self.http.get('http://127.0.0.1:4201/api');
+    return self.http.get(`${self.apiUrl}/payments`);
   }
 }

@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
+import { routes } from './routes/routes';
 
 // Handle POST requests that come in formatted as JSON
 app.use(express.json());
 
 // Add headers
-app.use(function (req: any, res: any, next: any) {
+app.use((req: any, res: any, next: any) => {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,10 +28,8 @@ app.use(function (req: any, res: any, next: any) {
     next();
 });
 
-// A default hello word route
-app.get('/api', (req: any, res: any) => {
-    res.send({hello: 'world'});
-});
+//  Connect all our routes to our application
+app.use('/api', routes);
 
 // start our server on port 4201
 app.listen(4201, () => {

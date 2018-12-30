@@ -17,14 +17,7 @@ export class PaymentsComponent implements OnInit {
     ngOnInit() {
         const self = this;
         //  get payments data source
-        // self.getPayments();
-
-        //  todo: api test call
-        self.paymentsService.apiTestCall().subscribe(
-            (res: any) => {
-                debugger;
-            }
-        );
+        self.getPayments();
     }
 
     private getPayments() {
