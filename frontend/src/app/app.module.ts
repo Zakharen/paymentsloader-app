@@ -24,7 +24,7 @@ import { AgGridModule } from 'ag-grid-angular';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents(null),
   ],
   providers: [
     // provider used to create fake backend
