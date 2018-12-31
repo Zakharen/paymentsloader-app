@@ -1,3 +1,4 @@
+const proxy = require('express-http-proxy');
 const express = require('express');
 const app = express();
 
@@ -5,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // Add headers
-app.use(function (req: any, res: any, next: any) {
+app.use((req: any, res: any, next: any) => {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,10 +28,13 @@ app.use(function (req: any, res: any, next: any) {
     next();
 });
 
-// A default hello word route
-app.get('/api', (req: any, res: any) => {
-    res.send({hello: 'world'});
-});
+// set proxy
+app.use('/api/payments', proxy('http://46.164.148.178:8001', {
+    proxyReqPathResolver: (req: any) => '/Payment/GetPaymentsData',
+}));
+app.use('/api/dbfs', proxy('http://46.164.148.178:8001', {
+    proxyReqPathResolver: (req: any) => '/Payment/GetDBFExportData',
+}));
 
 // start our server on port 4201
 app.listen(4201, () => {

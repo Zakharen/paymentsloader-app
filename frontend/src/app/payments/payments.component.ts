@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PaymentsService} from './payments.service';
+import {Payment} from '../shared/models';
 
 @Component({
     selector: 'app-payments',
@@ -7,7 +8,7 @@ import {PaymentsService} from './payments.service';
     styleUrls: ['./payments.component.scss']
 })
 export class PaymentsComponent implements OnInit {
-    public payments: any;
+    public payments: Payment[] = [];
 
     constructor(
         private paymentsService: PaymentsService,
@@ -17,21 +18,14 @@ export class PaymentsComponent implements OnInit {
     ngOnInit() {
         const self = this;
         //  get payments data source
-        // self.getPayments();
-
-        //  todo: api test call
-        self.paymentsService.apiTestCall().subscribe(
-            (res: any) => {
-                debugger;
-            }
-        );
+        self.getPayments();
     }
 
     private getPayments() {
         const self = this;
         self.paymentsService.getPayments()
-            .subscribe((res: any) => {
-                debugger;
+            .subscribe((res: Payment[]) => {
+                self.payments = res;
             });
     }
 }
