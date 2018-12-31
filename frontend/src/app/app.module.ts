@@ -12,6 +12,8 @@ import {fakeBackendProvider} from './_helpers/fakeBackend.interceptor';
 // app's custom imports
 import { CoreModule } from './core/core.module';
 
+import { AgGridModule } from 'ag-grid-angular';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -22,6 +24,7 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
+    AgGridModule.withComponents([]),
   ],
   providers: [
     // provider used to create fake backend
