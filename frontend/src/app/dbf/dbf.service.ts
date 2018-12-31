@@ -1,9 +1,29 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {catchError} from 'rxjs/operators';
+import {RequestHelperService} from "../core/services";
+import {Dbf} from "../shared/models";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class DbfService {
 
-  constructor() { }
+    private apiUrl = environment.apiUrl;
+
+    constructor(
+        private http: HttpClient,
+    ) {
+    }
+
+    /**
+     * Get all DBFs data
+     */
+    public getDBFs() {
+        const self = this;
+        return self.http
+            .get<Dbf[]>(`${self.apiUrl}/dbfs`)
+            .pipe(catchError(RequestHelperService.handleError));
+    }
 }

@@ -1,6 +1,6 @@
+const proxy = require('express-http-proxy');
 const express = require('express');
 const app = express();
-import { routes } from './routes/routes';
 
 // Handle POST requests that come in formatted as JSON
 app.use(express.json());
@@ -28,8 +28,13 @@ app.use((req: any, res: any, next: any) => {
     next();
 });
 
-//  Connect all our routes to our application
-app.use('/api', routes);
+// set proxy
+app.use('/api/payments', proxy('http://46.164.148.178:8001', {
+    proxyReqPathResolver: (req: any) => '/Payment/GetPaymentsData',
+}));
+app.use('/api/dbfs', proxy('http://46.164.148.178:8001', {
+    proxyReqPathResolver: (req: any) => '/Payment/GetDBFExportData',
+}));
 
 // start our server on port 4201
 app.listen(4201, () => {

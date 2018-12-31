@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {Payment} from '../shared/models';
+import {RequestHelperService} from '../core/services';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,8 @@ export class PaymentsService {
    */
   public getPayments() {
     const self = this;
-    return self.http.get(`${self.apiUrl}/payments`);
+    return self.http
+        .get<Payment[]>(`${self.apiUrl}/payments`)
+        .pipe(catchError(RequestHelperService.handleError));
   }
 }
