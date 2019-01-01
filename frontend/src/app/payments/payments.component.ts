@@ -37,6 +37,12 @@ export class PaymentsComponent implements OnInit {
         self.getPayments();
     }
 
+    /**
+     * TODO:
+     * on the backend parse response by row_N and contains
+     * specific words such as Bank, MFO, etc.
+     */
+
     private getPayments() {
         const self = this;
         self.paymentsService.getPayments()

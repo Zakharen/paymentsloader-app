@@ -10,7 +10,7 @@ import {AuthService} from './auth.service';
 })
 export class AuthComponent {
 
-  public username: string;
+  public email: string;
   public password: string;
   public showSpinner = false;
   public error: string;
@@ -21,7 +21,7 @@ export class AuthComponent {
   ) { }
 
   public login() {
-    this.auth.login(this.username, this.password)
+    this.auth.login(this.email, this.password)
       .pipe(first())
       .subscribe(
         result => this.router.navigate(['home']),
