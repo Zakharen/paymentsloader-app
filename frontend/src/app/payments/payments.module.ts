@@ -6,6 +6,8 @@ import { PaymentsComponent } from './payments.component';
 import { CoreModule } from '../core/core.module';
 import { PaymentsService } from './payments.service';
 
+import { AgGridModule } from 'ag-grid-angular';
+
 @NgModule({
   declarations: [PaymentsComponent],
   exports: [PaymentsComponent],
@@ -13,6 +15,7 @@ import { PaymentsService } from './payments.service';
     CommonModule,
     PaymentsRoutingModule,
     CoreModule,
+    AgGridModule.withComponents([PaymentsComponent]),
   ],
   providers: [PaymentsService]
 })

@@ -6,7 +6,9 @@
   "scripts": {
     "client": "cd frontend && ng serve",
     "server": "cd backend && npm run serve",
-    "serve": "concurrently \"npm run client\" \"npm run server\""
+    "server:dev": "cd backend && npm run serve:dev",
+    "serve": "concurrently \"npm run client\" \"npm run server\"",
+    "serve:dev": "concurrently \"npm run client\" \"npm run server:dev\""
   },
   "keywords": [
     "Huspi"
@@ -14,6 +16,12 @@
   "author": "Huspi",
   "license": "ISC",
   "dependencies": {
+    "@angular/cdk": "^7.2.0",
+    "ag-grid-angular": "^19.1.2",
+    "ag-grid-community": "^19.1.4",
     "concurrently": "^4.1.0"
+  },
+  "devDependencies": {
+    "jsonwebtoken": "^8.4.0"
   }
 }

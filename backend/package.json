@@ -4,7 +4,8 @@
   "description": "Payments loader application",
   "main": "index.js",
   "scripts": {
-    "serve": "ts-node-dev server.ts"
+    "serve": "ts-node-dev server.ts",
+    "serve:dev": "node --inspect server.ts"
   },
   "keywords": [
     "Huspi"

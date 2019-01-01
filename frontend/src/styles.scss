@@ -1,4 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Angular Material
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//@import '~@angular/material/theming';
+//
+//@include mat-core();
+
+// using deeppurple-amber color combo: https://github.com/angular/material2/blob/master/src/lib/core/theming/prebuilt/deeppurple-amber.scss
+//$primary: mat-palette($mat-deep-purple);
+//$accent:  mat-palette($mat-amber, A200, A100, A400);
+//
+//$theme: mat-light-theme($primary, $accent);
+
+// Include all theme styles for the components.
+//@include angular-material-theme($theme);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// ag-Grid
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// adjust the icons path
+$ag-mat-icons-path: "~ag-grid-community/src/styles/material-icons/";
+$ag-icons-path: "~ag-grid-community/src/styles/icons/";
+
+@import '~ag-grid-community/src/styles/ag-grid';
+
+// set the colors to the ones from the material theme
+//$ag-mat-primary: mat-color($primary);
+//$ag-mat-accent: mat-color($accent);
+
+// Import the ag-Grid material-next theme
+@import '~ag-grid-community/src/styles/ag-theme-material';
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
