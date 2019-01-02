@@ -1,5 +1,6 @@
 # dependencies
 node_modules
+/out
 
 # IDEs and editors
 /.idea
@@ -8,3 +9,4 @@ node_modules
 .c9/
 *.launch
 .settings/
+

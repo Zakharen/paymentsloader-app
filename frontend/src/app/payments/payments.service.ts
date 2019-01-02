@@ -23,7 +23,7 @@ export class PaymentsService {
   public getPayments() {
     const self = this;
     return self.http
-        .get<Payment[]>(`${self.apiUrl}/payments`)
+        .get<Payment[]>(`${self.apiUrl}/api/payments`)
         .pipe(catchError(RequestHelperService.handleError));
   }
 }

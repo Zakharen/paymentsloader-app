@@ -2,10 +2,13 @@
   "name": "paymentsloader-app",
   "version": "1.0.0",
   "description": "Payments loader application",
-  "main": "index.js",
+  "main": "lib/server.js",
   "scripts": {
     "serve": "ts-node-dev server.ts",
-    "serve:dev": "node --inspect server.ts"
+    "build": "npm run clean && tsc && npm run copy",
+    "postinstall": "npm run build-ts",
+    "clean": "rimraf lib",
+    "copy": "copyfiles _users/*.json package.json lib/"
   },
   "keywords": [
     "Huspi"
@@ -22,5 +25,9 @@
     "ts-node-dev": "^1.0.0-pre.32",
     "tslint": "^5.12.0",
     "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.1.0",
+    "rimraf": "^2.6.2"
   }
 }
