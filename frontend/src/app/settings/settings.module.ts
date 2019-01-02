@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {SettingsRoutingModule} from './settings-routing.module';
 import {SettingsComponent} from './settings.component';
 import {CoreModule} from '../core/core.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
     declarations: [SettingsComponent],
@@ -12,6 +13,7 @@ import {CoreModule} from '../core/core.module';
         CommonModule,
         SettingsRoutingModule,
         CoreModule,
+        SharedModule,
     ]
 })
 export class SettingsModule {

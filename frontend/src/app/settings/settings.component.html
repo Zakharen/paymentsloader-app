@@ -3,18 +3,13 @@
     <div mat-card-avatar class="example-header-logo">
       <mat-icon aria-label="Settings" class="info-settings">settings</mat-icon>
     </div>
-    <mat-card-title>Settings</mat-card-title>
-    <mat-card-subtitle>Application settings options</mat-card-subtitle>
+    <mat-card-title>Payments App Settings</mat-card-title>
+    <mat-card-subtitle>Current page allows you to set your own app configuration</mat-card-subtitle>
   </mat-card-header>
+</mat-card>
+
+<mat-card class="example-card">
   <mat-card-content>
-    <p>
-      Content is temporarily unavailable...
-    </p>
+    <app-theme-picker></app-theme-picker> Change your styles just tapping on color theme icon
   </mat-card-content>
-  <mat-card-actions>
-    <div>
-      <span class="example-spacer"></span>
-      <button mat-button [routerLink]="['/dashboard']" class="btn-nav"> Back to the Dashboard >>> </button>
-    </div>
-  </mat-card-actions>
 </mat-card>
