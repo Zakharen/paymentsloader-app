@@ -4,11 +4,15 @@
   "description": "Payments loader application",
   "main": "index.js",
   "scripts": {
-    "client": "cd frontend && ng serve",
+    "client": "cd frontend && ng serve --configuration=production",
+    "client:dev": "cd frontend && ng serve",
     "server": "cd backend && npm run serve",
-    "server:dev": "cd backend && npm run serve:dev",
     "serve": "concurrently \"npm run client\" \"npm run server\"",
-    "serve:dev": "concurrently \"npm run client\" \"npm run server:dev\""
+    "serve:dev": "concurrently \"npm run client:dev\" \"npm run server\"",
+    "build:client": "cd frontend && ng build",
+    "build:server": "cd backend && npm run build",
+    "build:app": "npm run build:client && npm run build:server",
+    "build": "npm run build:app && copyfiles -a frontend/dist out && copyfiles -a backend/lib out"
   },
   "keywords": [
     "Huspi"
@@ -22,6 +26,8 @@
     "concurrently": "^4.1.0"
   },
   "devDependencies": {
-    "jsonwebtoken": "^8.4.0"
+    "jsonwebtoken": "^8.4.0",
+    "copyfiles": "^2.1.0",
+    "rimraf": "^2.6.2"
   }
 }

@@ -1,9 +1,8 @@
 // mock token
-const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'huspi';
-const expiresIn = '2m';
-const userdb = JSON.parse(fs.readFileSync('./_users/users.json', 'UTF-8'));
+const expiresIn = '15m';
+import * as userdb from '../_users/users.json';
 
 class AuthHelper {
 

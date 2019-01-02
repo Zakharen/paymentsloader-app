@@ -13,7 +13,7 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<boolean> {
-        return this.http.post<{ token: string }>(`${environment.apiUrl}/login`, {email: email, password: password})
+        return this.http.post<{ token: string }>(`${environment.apiUrl}/api/login`, {email: email, password: password})
             .pipe(
                 map((result: any) => {
                     localStorage.setItem('access_token', result.access_token);
