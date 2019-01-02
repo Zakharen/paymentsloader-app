@@ -39,20 +39,14 @@ class AuthHelper {
 
     // auth middleware verification
     verifyRequest(req: any, res: any, next: any) {
-        console.log('=== come into verifyRequest ===');
         const token = AuthHelper.getToken(req);
-        console.log(`=== TOKEN = ${token} ===`);
         if (!token) {
-            console.log(`=== NO TOKEN ERROR ===`);
             return res.status(401).send({error: 'NoTokenError'});
         } else {
             const tokenCheckingResult = AuthHelper.verifyToken(token);
-            console.log(`=== verify TOKEN result is ${tokenCheckingResult.constructor.name} ===`);
             if (tokenCheckingResult.constructor.name === 'TokenExpiredError') {
-                console.log(`=== verifyRequest return ERROR ===`);
                 return res.status(401).send({error: 'TokenExpiredError'});
             } else {
-                console.log(`=== verifyRequest return NEXT() ===`);
                 return next();
             }
         }
