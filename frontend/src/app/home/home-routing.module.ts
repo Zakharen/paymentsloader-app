@@ -24,6 +24,10 @@ const routes: Routes = [
       {
         path: 'upload',
         loadChildren: '../uploader/uploader.module#UploaderModule'
+      },
+      {
+        path: 'settings',
+        loadChildren: '../settings/settings.module#SettingsModule'
       }
     ],
   },
