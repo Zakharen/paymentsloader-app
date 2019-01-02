@@ -12,7 +12,9 @@
     "build:client": "cd frontend && ng build",
     "build:server": "cd backend && npm run build",
     "build:app": "npm run build:client && npm run build:server",
-    "build": "npm run build:app && copyfiles -a frontend/dist out && copyfiles -a backend/lib out"
+    "build": "npm run build:app && copyfiles -a frontend/dist out && copyfiles -a backend/lib out",
+    "start:prod": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run start:prod\"",
+    "start:node": "concurrently \"cd backend && node server.js\" \"cd frontend && node server/server.js\""
   },
   "keywords": [
     "Huspi"

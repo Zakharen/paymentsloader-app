@@ -1,4 +1,5 @@
 const proxy = require('express-http-proxy');
+const path = require('path');
 const cors = require('cors');
 const express = require('express');
 const app = express();
