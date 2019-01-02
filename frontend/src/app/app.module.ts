@@ -10,7 +10,6 @@ import {CoreModule} from './core/core.module';
 import {AgGridModule} from 'ag-grid-angular';
 import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
 import {ErrorInterceptor} from './core/interceptors/error.interceptor';
-// import {SharedModule} from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -22,7 +21,6 @@ import {ErrorInterceptor} from './core/interceptors/error.interceptor';
         AppRoutingModule,
         BrowserAnimationsModule,
         CoreModule,
-        // SharedModule,
         AgGridModule.withComponents(null),
     ],
     providers: [
