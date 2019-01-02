@@ -5,15 +5,11 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-// temporary _helpers
-import {fakeBackendProvider} from './_helpers/fakeBackend.interceptor';
-
-// app's custom imports
 import {CoreModule} from './core/core.module';
 
 import {AgGridModule} from 'ag-grid-angular';
 import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
+import {ErrorInterceptor} from './core/interceptors/error.interceptor';
 
 @NgModule({
     declarations: [
@@ -29,8 +25,7 @@ import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-        // provider used to create fake backend
-        // fakeBackendProvider
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     ],
     bootstrap: [AppComponent]
 })
