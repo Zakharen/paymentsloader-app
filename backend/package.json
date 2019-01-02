@@ -6,7 +6,6 @@
   "scripts": {
     "serve": "ts-node-dev server.ts",
     "build": "npm run clean && tsc && npm run copy",
-    "postinstall": "npm run build-ts",
     "clean": "rimraf lib",
     "copy": "copyfiles _users/*.json package.json lib/"
   },
