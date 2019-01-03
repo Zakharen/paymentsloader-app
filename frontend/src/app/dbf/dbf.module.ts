@@ -6,6 +6,7 @@ import {DbfComponent} from './dbf.component';
 import {DbfService} from './dbf.service';
 import {CoreModule} from '../core/core.module';
 import {AgGridModule} from 'ag-grid-angular';
+import {GridHelper} from './helpers/grid.helper';
 
 @NgModule({
     declarations: [DbfComponent],
@@ -16,7 +17,10 @@ import {AgGridModule} from 'ag-grid-angular';
         DbfRoutingModule,
         AgGridModule.withComponents([DbfComponent]),
     ],
-    providers: [DbfService]
+    providers: [
+        DbfService,
+        GridHelper,
+    ]
 })
 export class DbfModule {
 }

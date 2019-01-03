@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PaymentsService} from './payments.service';
 import {Payment} from '../shared/models';
+import {GridHelper} from './helpers/grid.helper';
 
 @Component({
     selector: 'app-payments',
@@ -9,39 +10,19 @@ import {Payment} from '../shared/models';
 })
 export class PaymentsComponent implements OnInit {
     public payments: Payment[] = [];
-    public columnDefs = [
-        {headerName: 'Row 1', field: 'row_1'},
-        {headerName: 'Row 2', field: 'row_2'},
-        {headerName: 'Row 3', field: 'row_3'},
-        {headerName: 'Row 4', field: 'row_4'},
-        {headerName: 'Row 5', field: 'row_5'},
-        {headerName: 'Row 6', field: 'row_6'},
-        {headerName: 'Row 7', field: 'row_7'},
-        {headerName: 'Row 8', field: 'row_8'},
-        {headerName: 'Row 9', field: 'row_9'},
-        {headerName: 'Row 10', field: 'row_10'},
-        {headerName: 'Row 11', field: 'row_11'},
-        {headerName: 'Row 12', field: 'row_12'},
-        {headerName: 'Row 13', field: 'row_13'},
-        {headerName: 'Confirmed', field: 'Confirmed'},
-    ];
+    public gridOptions;
 
     constructor(
         private paymentsService: PaymentsService,
+        private gridHelper: GridHelper,
     ) {
     }
 
     ngOnInit() {
         const self = this;
-        //  get payments data source
         self.getPayments();
+        self.initGridOptions();
     }
-
-    /**
-     * TODO:
-     * on the backend parse response by row_N and contains
-     * specific words such as Bank, MFO, etc.
-     */
 
     private getPayments() {
         const self = this;
@@ -49,5 +30,10 @@ export class PaymentsComponent implements OnInit {
             .subscribe((res: Payment[]) => {
                 self.payments = res;
             });
+    }
+
+    private initGridOptions() {
+        const self = this;
+        self.gridOptions = self.gridHelper.gridOptions;
     }
 }
