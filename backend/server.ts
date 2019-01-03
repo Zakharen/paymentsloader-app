@@ -15,8 +15,23 @@ app.use(express.json());
 app.use('/api/payments', authHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => '/Payment/GetPaymentsData',
     userResDecorator: (proxyRes: any, proxyResData: any, userReq: any, userRes: any) => {
-        console.log('HANDLED RESPONSE ===============================');
-        return proxyResData;
+        try {
+            const output = [];
+            const resData = JSON.parse(proxyResData);
+            if (resData && resData instanceof Array) {
+                for (let i = 0; i < resData.length; i++) {
+                    if (resData[i].row_11) {
+                        output.push(resData[i]);
+                    }
+                }
+                return JSON.stringify(output);
+            } else {
+                return proxyResData;
+            }
+        } catch (e) {
+            console.log('/Payment/GetPaymentsData parsing error');
+            return proxyResData;
+        }
     }
 }));
 app.use('/api/dbfs', proxy('http://46.164.148.178:8001', {
