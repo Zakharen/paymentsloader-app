@@ -8,7 +8,6 @@ import {AuthService} from '../../auth';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
     constructor(
-        private authService: AuthService,
         private router: Router,
     ) {}
 
@@ -16,7 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(catchError(err => {
             if (err.status === 401) {
                 // auto logout if 401 response returned from api
-                this.authService.logout();
+                AuthService.logout();
                 this.router.navigate(['/auth']);
             }
             const error = err.error.message || err.statusText;

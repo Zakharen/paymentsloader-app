@@ -4,13 +4,15 @@
       "id": 1,
       "name": "admin",
       "email": "admin@huspi.com",
-      "password": "admin"
+      "password": "admin",
+      "type": "admin"
     },
     {
       "id": 2,
       "name": "test",
       "email": "test@huspi.com",
-      "password": "test"
+      "password": "test",
+      "type": "user"
     }
   ]
 }

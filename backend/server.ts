@@ -48,7 +48,8 @@ app.post('/api/login', (req: any, res: any) => {
         return;
     }
     const access_token = authHelper.createToken({email, password});
-    res.status(200).json({access_token});
+    const userCredentials = authHelper.getUserCredentials(email);
+    res.status(200).json({access_token, userCredentials});
 });
 
 // start our server on port 4201

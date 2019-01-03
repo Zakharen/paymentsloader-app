@@ -11,13 +11,13 @@ import {AuthService} from '../auth';
 export class HomeComponent implements OnDestroy {
 
   mobileQuery: MediaQueryList;
+  public isAdmin = AuthService.userCredentials() === 'admin';
 
   private _mobileQueryListener: () => void;
 
   constructor(
       changeDetectorRef: ChangeDetectorRef,
       media: MediaMatcher,
-      private authService: AuthService,
       private router: Router,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -31,7 +31,7 @@ export class HomeComponent implements OnDestroy {
 
   public logout() {
     const self = this;
-    self.authService.logout();
+    AuthService.logout();
     self.router.navigate(['/auth']);
   }
 }

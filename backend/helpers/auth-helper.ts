@@ -36,6 +36,14 @@ class AuthHelper {
         return this.userdb.users.findIndex((user: any) => user.email === email && user.password === password) !== -1;
     }
 
+    getUserCredentials(email: string) {
+        const user = this.userdb.users.find((user: any) => user.email === email);
+        if (user && user.hasOwnProperty('type')) {
+            return user.type;
+        }
+        return null;
+    }
+
     // auth middleware verification
     verifyRequest(req: any, res: any, next: any) {
         const token = AuthHelper.getToken(req);
