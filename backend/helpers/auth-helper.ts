@@ -5,10 +5,10 @@ const expiresIn = '15m';
 
 export class AuthHelper {
 
-    private userdb: any;
+    private userDB: any;
 
     constructor(userDB: any) {
-        this.userdb = userDB;
+        this.userDB = userDB;
     }
 
     // Get token
@@ -30,13 +30,18 @@ export class AuthHelper {
         return jwt.sign(payload, SECRET_KEY, {expiresIn})
     }
 
-    // Check if the user exists in database
+    // Check if the user exists in authenticated
     isAuthenticated({email, password}: any) {
-        return this.userdb.users.findIndex((user: any) => user.email === email && user.password === password) !== -1;
+        return this.userDB.users.findIndex((user: any) => user.email === email && user.password === password) !== -1;
+    }
+
+    // Check if the user exists in database
+    isUserExist(email: string) {
+        return this.userDB.users.findIndex((user: any) => user.email === email) !== -1;
     }
 
     getUserCredentials(email: string) {
-        const user = this.userdb.users.find((user: any) => user.email === email);
+        const user = this.userDB.users.find((user: any) => user.email === email);
         if (user && user.hasOwnProperty('type')) {
             return user.type;
         }

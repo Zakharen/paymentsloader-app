@@ -1,11 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {throwError} from 'rxjs';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RequestHelperService {
+
+    constructor(
+        private snackBar: MatSnackBar,
+    ) {}
 
     public static handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
@@ -21,5 +26,21 @@ export class RequestHelperService {
         // return an observable with a user-facing error message
         return throwError(
             'Something bad happened; please try again later.');
+    }
+
+    public snackBarWarning(message: string, duration?: number) {
+        const self = this;
+        self.snackBar.open(message, null, <MatSnackBarConfig>{
+            duration: duration || 3000,
+            extraClasses: ['warning']
+        });
+    }
+
+    public snackBarSuccess(message: string) {
+        const self = this;
+        self.snackBar.open(message, null, <MatSnackBarConfig>{
+            duration: 3000,
+            extraClasses: ['success']
+        });
     }
 }

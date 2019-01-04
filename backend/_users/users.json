@@ -1,18 +1,1 @@
-{
-  "users": [
-    {
-      "id": 1,
-      "name": "admin",
-      "email": "admin@huspi.com",
-      "password": "admin",
-      "type": "admin"
-    },
-    {
-      "id": 2,
-      "name": "test",
-      "email": "test@huspi.com",
-      "password": "test",
-      "type": "user"
-    }
-  ]
-}
+{"users":[{"id":1,"name":"admin","email":"admin@huspi.com","password":"admin","type":"admin"},{"id":2,"name":"test","email":"test@huspi.com","password":"test","type":"user"},{"id":"728337e0-1024-11e9-82cc-59acfc5231d1","name":"dfdsfsdfd","email":"ussdfdsfer@salinen.com","password":"user","type":"admin"},{"id":"df952a40-1025-11e9-ba27-6f6d182449a0","name":"andy","email":"andy@huspi.com","password":"andy","type":"admin"}]}

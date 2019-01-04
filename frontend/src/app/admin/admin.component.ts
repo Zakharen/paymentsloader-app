@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from './admin.service';
-import {first} from "rxjs/operators";
+import {first} from 'rxjs/operators';
+import {RequestHelperService} from '../core/services';
 
 @Component({
     selector: 'app-admin',
@@ -19,6 +20,7 @@ export class AdminComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private adminService: AdminService,
+        private requestHelper: RequestHelperService,
     ) {
     }
 
@@ -38,25 +40,25 @@ export class AdminComponent implements OnInit {
     }
 
     addUser() {
-        // Todo: add user
-        debugger;
+        const self = this;
         // stop here if form is invalid
-        if (this.registerForm.invalid) {
+        if (self.registerForm.invalid) {
             return;
         }
-        this.adminService.addUser(this.registerForm.value)
+        self.adminService.addUser(self.registerForm.value)
             .pipe(first())
             .subscribe(
                 result => {
-                    debugger
+                    self.requestHelper.snackBarSuccess('New user was created!');
+                    self.refreshForm();
                 },
                 err => console.log(err)
             );
     }
 
-    cancelAddUser() {
+    refreshForm() {
         const self = this;
-        // Todo: clear form
+        self.registerForm.reset();
         self.setStep(0);
     }
 

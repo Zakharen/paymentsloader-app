@@ -1,15 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
-import {AuthHelper} from '../helpers/auth-helper';
+import {Request, Response, NextFunction} from 'express';
+import {AuthHelper} from '../helpers/';
 
 export class Auth {
     private authHelper: AuthHelper;
+
     constructor(authHelper: AuthHelper) {
         this.authHelper = authHelper;
         this.login = this.login.bind(this);
     }
 
     login(req: Request, res: Response, next: NextFunction) {
-        console.log('Login user');
         const {email, password} = req.body;
         if (this.authHelper.isAuthenticated({email, password}) === false) {
             const status = 401;

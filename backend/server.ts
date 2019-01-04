@@ -1,7 +1,7 @@
-import * as userdb from './_users/users.json';
+import * as userDB from './_users/users.json';
 import {User} from './controllers/user';
 import {Auth} from './controllers/auth';
-import {AuthHelper} from './helpers/auth-helper';
+import {AuthHelper} from './helpers/';
 
 const proxy = require('express-http-proxy');
 const cors = require('cors');
@@ -14,9 +14,9 @@ app.options('*', cors());
 // Handle POST requests that come in formatted as JSON
 app.use(express.json());
 
-const authHelper = new AuthHelper(userdb);
+const authHelper = new AuthHelper(userDB);
 const authCtrl = new Auth(authHelper);
-const userCtrl = new User();
+const userCtrl = new User(userDB, authHelper);
 
 // set proxy
 app.use('/api/payments', authHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
