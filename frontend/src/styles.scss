@@ -24,9 +24,6 @@ $theme: mat-light-theme($primary, $accent);
 $ag-mat-icons-path: "~ag-grid-community/src/styles/material-icons/";
 $ag-icons-path: "~ag-grid-community/src/styles/icons/";
 
-// changes the border color
-//$border-color: mat-color($primary);
-
 @import '~ag-grid-community/src/styles/ag-grid';
 
 // set the colors to the ones from the material theme

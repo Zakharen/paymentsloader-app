@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {AuthService} from './auth.service';
+import {AuthService} from '../../auth';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class CredentialsGuard implements CanActivate {
     constructor(
         private router: Router,
     ) {
@@ -14,13 +14,13 @@ export class AuthGuard implements CanActivate {
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         const self = this;
-        const isUserLogged = AuthService.loggedIn;
-        if (isUserLogged) {
+        const userCredential = AuthService.userCredentials();
+        if (userCredential === 'admin') {
             // authorised so return true
             return true;
         }
-        // not logged in so redirect to login page with the return url
-        self.router.navigate(['/auth']);
+        // if no permission to access, then go to dashboard
+        self.router.navigate(['/dashboard']);
         return false;
     }
 }

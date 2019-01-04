@@ -2,14 +2,13 @@
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'huspi';
 const expiresIn = '15m';
-import * as userdb from '../_users/users.json';
 
-class AuthHelper {
+export class AuthHelper {
 
-    private userdb: any;
+    private userDB: any;
 
     constructor(userDB: any) {
-        this.userdb = userDB;
+        this.userDB = userDB;
     }
 
     // Get token
@@ -27,17 +26,12 @@ class AuthHelper {
     }
 
     // Create a token from a payload
-    createToken(payload: any) {
+    static createToken(payload: any) {
         return jwt.sign(payload, SECRET_KEY, {expiresIn})
     }
 
-    // Check if the user exists in database
-    isAuthenticated({email, password}: any) {
-        return this.userdb.users.findIndex((user: any) => user.email === email && user.password === password) !== -1;
-    }
-
     // auth middleware verification
-    verifyRequest(req: any, res: any, next: any) {
+    static verifyRequest(req: any, res: any, next: any) {
         const token = AuthHelper.getToken(req);
         if (!token) {
             return res.status(401).send({error: 'NoTokenError'});
@@ -50,6 +44,30 @@ class AuthHelper {
             }
         }
     }
-}
 
-module.exports = new AuthHelper(userdb);
+    // Check if the user exists in authenticated
+    isAuthenticated({email, password}: any) {
+        return this.userDB.users.findIndex((user: any) => user.email === email && user.password === password) !== -1;
+    }
+
+    // Check if the user exists in database
+    isUserExist(email: string) {
+        return this.userDB.users.findIndex((user: any) => user.email === email) !== -1;
+    }
+
+    getUserById(id: any) {
+        const user = this.userDB.users.find((user: any) => user.id === id);
+        if (user && Object.keys(user).length) {
+            return user;
+        }
+        return null;
+    }
+
+    getUserCredentials(email: string) {
+        const user = this.userDB.users.find((user: any) => user.email === email);
+        if (user && user.hasOwnProperty('type')) {
+            return user.type;
+        }
+        return null;
+    }
+}

@@ -1,0 +1,71 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-logo">
+            <mat-icon aria-label="Administrator's configuration board" color="primary" class="admin-icon">usb</mat-icon>
+        </div>
+        <mat-card-title>Administrator</mat-card-title>
+        <mat-card-subtitle>Page provides administrative possibilities. Be careful using this page.</mat-card-subtitle>
+    </mat-card-header>
+</mat-card>
+
+<mat-accordion>
+    <mat-expansion-panel class="panel" [expanded]="step === 1" (opened)="setStep(1)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Add user
+            </mat-panel-title>
+            <mat-panel-description>
+                Create new user
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="registerForm">
+            <mat-form-field class="field">
+                <input matInput type="text" placeholder="Name" formControlName="name" required>
+                <mat-error *ngIf="registerForm.controls['name'].invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput type="email" placeholder="Email" formControlName="email" required>
+                <mat-error *ngIf="registerForm.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <mat-error *ngIf="registerForm.controls['password'].invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <mat-select placeholder="Credential" formControlName="type">
+                    <mat-option *ngFor="let role of roles" [value]="role.value">
+                        {{role.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+
+        <mat-action-row>
+            <button mat-stroked-button class="btn" color="warn" (click)="refreshForm()">Cancel
+            </button>
+            <button mat-stroked-button class="btn" color="primary" type="submit" (click)="addUser()"
+                    [disabled]="registerForm.invalid">Save
+            </button>
+        </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)"
+                         class="panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Users
+            </mat-panel-title>
+            <mat-panel-description>
+                Represent a list of available users
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-users></app-users>
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+

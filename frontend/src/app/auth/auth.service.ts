@@ -9,6 +9,19 @@ import {environment} from '../../environments/environment';
 })
 export class AuthService {
 
+    public static loggedIn(): boolean {
+        return (localStorage.getItem(environment.storageKeys.token) !== null);
+    }
+
+    public static userCredentials(): string {
+        return localStorage.getItem(environment.storageKeys.userCredentials);
+    }
+
+    public static logout() {
+        localStorage.removeItem(environment.storageKeys.token);
+        localStorage.removeItem(environment.storageKeys.userCredentials);
+    }
+
     constructor(private http: HttpClient) {
     }
 
@@ -16,17 +29,10 @@ export class AuthService {
         return this.http.post<{ token: string }>(`${environment.apiUrl}/api/login`, {email: email, password: password})
             .pipe(
                 map((result: any) => {
-                    localStorage.setItem('access_token', result.access_token);
+                    localStorage.setItem(environment.storageKeys.token, result.access_token);
+                    localStorage.setItem(environment.storageKeys.userCredentials, result.userCredentials);
                     return true;
                 })
             );
-    }
-
-    logout() {
-        localStorage.removeItem('access_token');
-    }
-
-    public get loggedIn(): boolean {
-        return (localStorage.getItem('access_token') !== null);
     }
 }

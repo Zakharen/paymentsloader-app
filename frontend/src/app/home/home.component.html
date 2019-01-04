@@ -26,6 +26,8 @@
           <mat-icon aria-label="Uploads" color="primary" class="menu-item">cloud_download</mat-icon>Uploads</a>
         <a mat-list-item [routerLink]="['/settings']">
           <mat-icon aria-label="App settings" color="primary" class="menu-item">settings_applications</mat-icon>App settings</a>
+        <a *ngIf="isAdmin" mat-list-item [routerLink]="['/admin']">
+          <mat-icon aria-label="Administrator" color="primary" class="menu-item">usb</mat-icon>Administrator</a>
       </mat-nav-list>
     </mat-sidenav>
 
