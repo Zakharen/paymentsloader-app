@@ -19,7 +19,7 @@ const authCtrl = new Auth(authHelper);
 const userCtrl = new User(userDB, authHelper);
 
 // set proxy
-app.use('/api/payments', authHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
+app.use('/api/payments', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => '/Payment/GetPaymentsData',
     userResDecorator: (proxyRes: any, proxyResData: any, userReq: any, userRes: any) => {
         try {
@@ -46,7 +46,9 @@ app.use('/api/dbfs', proxy('http://46.164.148.178:8001', {
 }));
 
 app.post('/api/login', authCtrl.login);
-app.post('/api/user', authHelper.verifyRequest, userCtrl.addUser);
+app.get('/api/user', AuthHelper.verifyRequest, userCtrl.users);
+app.post('/api/user', AuthHelper.verifyRequest, userCtrl.addUser);
+app.delete('/api/user/:id', AuthHelper.verifyRequest, userCtrl.deleteUser);
 
 // start our server on port 4201
 app.listen(4201, () => {

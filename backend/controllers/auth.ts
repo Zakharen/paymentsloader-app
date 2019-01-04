@@ -17,7 +17,7 @@ export class Auth {
             res.status(status).json({status, message});
             return;
         }
-        const access_token = this.authHelper.createToken({email, password});
+        const access_token = AuthHelper.createToken({email, password});
         const userCredentials = this.authHelper.getUserCredentials(email);
         res.status(200).json({access_token, userCredentials});
     }

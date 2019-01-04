@@ -51,6 +51,7 @@ export class AdminComponent implements OnInit {
                 result => {
                     self.requestHelper.snackBarSuccess('New user was created!');
                     self.refreshForm();
+                    self.adminService.announceUserWasAdded(true);
                 },
                 err => console.log(err)
             );

@@ -26,8 +26,23 @@ export class AuthHelper {
     }
 
     // Create a token from a payload
-    createToken(payload: any) {
+    static createToken(payload: any) {
         return jwt.sign(payload, SECRET_KEY, {expiresIn})
+    }
+
+    // auth middleware verification
+    static verifyRequest(req: any, res: any, next: any) {
+        const token = AuthHelper.getToken(req);
+        if (!token) {
+            return res.status(401).send({error: 'NoTokenError'});
+        } else {
+            const tokenCheckingResult = AuthHelper.verifyToken(token);
+            if (tokenCheckingResult.constructor.name === 'TokenExpiredError') {
+                return res.status(401).send({error: 'TokenExpiredError'});
+            } else {
+                return next();
+            }
+        }
     }
 
     // Check if the user exists in authenticated
@@ -40,26 +55,19 @@ export class AuthHelper {
         return this.userDB.users.findIndex((user: any) => user.email === email) !== -1;
     }
 
+    getUserById(id: any) {
+        const user = this.userDB.users.find((user: any) => user.id === id);
+        if (user && Object.keys(user).length) {
+            return user;
+        }
+        return null;
+    }
+
     getUserCredentials(email: string) {
         const user = this.userDB.users.find((user: any) => user.email === email);
         if (user && user.hasOwnProperty('type')) {
             return user.type;
         }
         return null;
-    }
-
-    // auth middleware verification
-    verifyRequest(req: any, res: any, next: any) {
-        const token = AuthHelper.getToken(req);
-        if (!token) {
-            return res.status(401).send({error: 'NoTokenError'});
-        } else {
-            const tokenCheckingResult = AuthHelper.verifyToken(token);
-            if (tokenCheckingResult.constructor.name === 'TokenExpiredError') {
-                return res.status(401).send({error: 'TokenExpiredError'});
-            } else {
-                return next();
-            }
-        }
     }
 }

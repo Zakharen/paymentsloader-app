@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 AuthService.logout();
                 this.router.navigate(['/auth']);
             }
-            if (err.status === 409) {
+            if (err.status === 409 || err.status === 400) {
                 this.requestHelper.snackBarWarning(err.error.message);
             }
             const error = err.error.message || err.statusText;

@@ -10,7 +10,18 @@ export class User {
     constructor(userDB: any, authHelper: AuthHelper) {
         this.userDB = userDB;
         this.authHelper = authHelper;
+        // added to safe this reference
+        this.users = this.users.bind(this);
         this.addUser = this.addUser.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+    }
+
+    users(req: Request, res: Response, next: NextFunction) {
+        const db = FileHelper.loadData(this.path);
+        const users = db.users.map((user: any) => {
+            return {id: user.id, name: user.name, email: user.email, type: user.type}
+        });
+        return res.status(200).send({users});
     }
 
     addUser(req: Request, res: Response, next: NextFunction) {
@@ -30,14 +41,27 @@ export class User {
                 "password": req.body.password,
                 "type": req.body.type
             };
-            console.log('newUser:', newUser);
             db.users.push(newUser);
             FileHelper.storeData(db, this.path);
             return res.status(200).send({...req.body});
         }
-        const status = 500;
+        const status = 400;
         const message = 'Server error: could not create a new user';
-        return res.status(500).json({status, message});
+        return res.status(400).json({status, message});
+    }
+
+    deleteUser(req: Request, res: Response, next: NextFunction) {
+        if (req.hasOwnProperty('params') && req.params.hasOwnProperty('id') && req.params.id) {
+            const db = FileHelper.loadData(this.path);
+            db.users = db.users.filter((user: any) => user.id !== req.params.id);
+            FileHelper.storeData(db, this.path);
+            const status = 200;
+            const message = 'Result: user was successfully removed';
+            return res.status(status).send({status, message});
+        }
+        const status = 400;
+        const message = 'Error: something went wrong, check request params.';
+        return res.status(400).json({status, message});
     }
 }
 

@@ -6,6 +6,7 @@ import {AdminRoutingModule} from './admin-routing.module';
 import {AdminComponent} from './admin.component';
 import {CoreModule} from '../core/core.module';
 import {AdminService} from './admin.service';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
     declarations: [AdminComponent],
@@ -14,7 +15,8 @@ import {AdminService} from './admin.service';
         CommonModule,
         CoreModule,
         AdminRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SharedModule,
     ],
     providers: [AdminService]
 })
