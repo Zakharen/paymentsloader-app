@@ -2,9 +2,8 @@
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'huspi';
 const expiresIn = '15m';
-import * as userdb from '../_users/users.json';
 
-class AuthHelper {
+export class AuthHelper {
 
     private userdb: any;
 
@@ -59,5 +58,3 @@ class AuthHelper {
         }
     }
 }
-
-module.exports = new AuthHelper(userdb);
