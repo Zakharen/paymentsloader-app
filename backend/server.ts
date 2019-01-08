@@ -20,7 +20,10 @@ const userCtrl = new User(userDB, authHelper);
 
 // set proxy
 app.use('/api/payments', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
-    proxyReqPathResolver: (req: any) => '/Payment/GetPaymentsData',
+    proxyReqPathResolver: (req: any) => {
+        console.log('=== req.url : ', req.url);
+        return '/Payment/GetPaymentsData';
+    },
     userResDecorator: (proxyRes: any, proxyResData: any, userReq: any, userRes: any) => {
         try {
             const output = [];

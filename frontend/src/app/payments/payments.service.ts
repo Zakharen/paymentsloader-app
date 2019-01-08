@@ -23,7 +23,7 @@ export class PaymentsService {
   public getPayments() {
     const self = this;
     return self.http
-        .get<Payment[]>(`${self.apiUrl}/api/payments`)
+        .get<Payment[]>(`${self.apiUrl}/api/payments?filedatefrom=2019-01-05&filedateto=2019-01-07`)
         .pipe(catchError(RequestHelperService.handleError));
   }
 }
