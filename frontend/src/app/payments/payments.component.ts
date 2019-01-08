@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PaymentsService} from './payments.service';
 import {Payment} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
+import {FileDates} from '../shared/components/dates-range/models';
 
 @Component({
     selector: 'app-payments',
@@ -24,9 +25,14 @@ export class PaymentsComponent implements OnInit {
         self.initGridOptions();
     }
 
-    private getPayments() {
+    public datesRangeChanged(dates: FileDates) {
         const self = this;
-        self.paymentsService.getPayments()
+        self.getPayments(dates);
+    }
+
+    private getPayments(dates?: FileDates) {
+        const self = this;
+        self.paymentsService.getPayments(dates)
             .subscribe((res: Payment[]) => {
                 self.payments = res;
             });
