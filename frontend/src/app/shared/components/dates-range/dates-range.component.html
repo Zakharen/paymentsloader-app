@@ -1,0 +1,25 @@
+<form [formGroup]="datesRangeForm" class="dates-range-form">
+    <mat-form-field>
+        <input matInput [matDatepicker]="filedatefrom" placeholder="Files from" formControlName="filedatefrom" required>
+        <mat-datepicker-toggle matSuffix [for]="filedatefrom"></mat-datepicker-toggle>
+        <mat-datepicker #filedatefrom></mat-datepicker>
+        <mat-error *ngIf="datesRangeForm.controls['filedatefrom'].hasError('required')">{{errorMsg}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="filedateto" placeholder="to" formControlName="filedateto"
+               [min]="datesRangeForm.controls['filedatefrom'].value" required>
+        <mat-datepicker-toggle matSuffix [for]="filedateto"></mat-datepicker-toggle>
+        <mat-datepicker #filedateto></mat-datepicker>
+        <mat-error *ngIf="datesRangeForm.controls['filedateto'].hasError('required')">{{errorMsg}}</mat-error>
+    </mat-form-field>
+
+    <button mat-icon-button color="primary" type="submit" [disabled]="datesRangeForm.invalid" (click)="filter()">
+        <mat-icon aria-label="Find files per dates range" class="filter-icon">check_circle_outline</mat-icon>
+    </button>
+
+    <button mat-icon-button color="warn" type="button" [disabled]="datesRangeForm.invalid" (click)="clear()">
+        <mat-icon aria-label="Find files per dates range" class="filter-icon">remove_circle_outline
+        </mat-icon>
+    </button>
+</form>

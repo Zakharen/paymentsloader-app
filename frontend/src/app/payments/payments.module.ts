@@ -1,12 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {PaymentsRoutingModule} from './payments-routing.module';
-import {PaymentsComponent} from './payments.component';
-import {CoreModule} from '../core/core.module';
-import {PaymentsService} from './payments.service';
-
 import {AgGridModule} from 'ag-grid-angular';
+import {PaymentsRoutingModule} from './payments-routing.module';
+import {CoreModule} from '../core/core.module';
+import {SharedModule} from '../shared/shared.module';
+
+import {PaymentsComponent} from './payments.component';
+import {PaymentsService} from './payments.service';
 import {GridHelper} from './helpers/grid.helper';
 
 @NgModule({
@@ -16,6 +17,7 @@ import {GridHelper} from './helpers/grid.helper';
         CommonModule,
         PaymentsRoutingModule,
         CoreModule,
+        SharedModule,
         AgGridModule.withComponents([PaymentsComponent]),
     ],
     providers: [

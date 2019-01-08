@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 export class GridHelper {
     public gridOptions = {
         columnDefs: GridHelper.getColumnsDefinitions(),
+        enableColResize: true,
     };
 
     private static getColumnsDefinitions() {

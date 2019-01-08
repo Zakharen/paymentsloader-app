@@ -11,6 +11,7 @@ import {CoreModule} from './core/core.module';
 import {AgGridModule} from 'ag-grid-angular';
 import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
 import {ErrorInterceptor} from './core/interceptors/error.interceptor';
+import {LoaderInterceptor} from './core/interceptors/loader.interceptor';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import {ErrorInterceptor} from './core/interceptors/error.interceptor';
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
     ],
     bootstrap: [AppComponent]
 })

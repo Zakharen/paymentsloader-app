@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DbfService} from './dbf.service';
 import {Dbf} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
+import {LoaderService} from '../core/services';
 
 @Component({
     selector: 'app-dbf',
@@ -13,6 +14,7 @@ export class DbfComponent implements OnInit {
     public gridOptions;
 
     constructor(
+        public loaderService: LoaderService,
         private dbfService: DbfService,
         private gridHelper: GridHelper,
     ) {

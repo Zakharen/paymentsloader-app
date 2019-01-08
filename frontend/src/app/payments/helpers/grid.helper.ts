@@ -4,11 +4,13 @@ import {Injectable} from '@angular/core';
 export class GridHelper {
     public gridOptions = {
         columnDefs: GridHelper.getColumnsDefinitions(),
+        enableColResize: true,
     };
 
     private static getColumnsDefinitions() {
         return [
             {headerName: 'ЕДпоу', field: 'row_1'},
+            {headerName: 'FileName', field: 'FileName'},
             {headerName: '№ реестра валидаций', field: 'row_2'},
             {headerName: 'МФО', field: 'row_3'},
             {headerName: 'Банк', field: 'row_4'},

@@ -7,6 +7,7 @@ import {DbfService} from './dbf.service';
 import {CoreModule} from '../core/core.module';
 import {AgGridModule} from 'ag-grid-angular';
 import {GridHelper} from './helpers/grid.helper';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
     declarations: [DbfComponent],
@@ -14,6 +15,7 @@ import {GridHelper} from './helpers/grid.helper';
     imports: [
         CommonModule,
         CoreModule,
+        SharedModule,
         DbfRoutingModule,
         AgGridModule.withComponents([DbfComponent]),
     ],

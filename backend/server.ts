@@ -1,7 +1,7 @@
 import * as userDB from './_users/users.json';
 import {User} from './controllers/user';
 import {Auth} from './controllers/auth';
-import {AuthHelper} from './helpers/';
+import {AuthHelper, RequestHelper} from './helpers/';
 
 const proxy = require('express-http-proxy');
 const cors = require('cors');
@@ -20,7 +20,9 @@ const userCtrl = new User(userDB, authHelper);
 
 // set proxy
 app.use('/api/payments', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
-    proxyReqPathResolver: (req: any) => '/Payment/GetPaymentsData',
+    proxyReqPathResolver: (req: any) => {
+        return `/Payment/GetPaymentsData${RequestHelper.paramsParser(req.url)}`;
+    },
     userResDecorator: (proxyRes: any, proxyResData: any, userReq: any, userRes: any) => {
         try {
             const output = [];
