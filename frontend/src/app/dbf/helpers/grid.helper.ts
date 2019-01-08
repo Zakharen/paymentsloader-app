@@ -11,8 +11,16 @@ export class GridHelper {
         return [
             {headerName: 'CPU', field: 'CPU'},
             {headerName: 'Confirmed', field: 'Confirmed'},
-            {headerName: 'Row 3', field: 'DA'},
-            {headerName: 'Row 4', field: 'DA_DOC'},
+            {
+                headerName: 'DA',
+                field: 'DA',
+                valueFormatter: GridHelper.dateFormatter,
+            },
+            {
+                headerName: 'DA_DOC',
+                field: 'DA_DOC',
+                valueFormatter: GridHelper.dateFormatter,
+            },
             {headerName: 'Row 5', field: 'DK'},
             {headerName: 'Row 6', field: 'I_VA'},
             {headerName: 'Row 7', field: 'Id'},
@@ -29,5 +37,28 @@ export class GridHelper {
             {headerName: 'SUMMA', field: 'SUMMA'},
             {headerName: 'VID', field: 'VID'},
         ];
+    }
+
+    /**
+     * Parse grid cell data view for date string
+     * @param params agGrid reference
+     */
+    private static dateFormatter(params: { value: any }): string {
+        let date = null;
+        if (params.value instanceof Date) {
+            date = params.value.toISOString().substring(0, 10);
+        } else if (typeof params.value === 'string' && params.value.trim()) {
+            try {
+                const payloads = params.value.replace(new RegExp('/', 'g'), '');
+                const item = payloads.match(/\d+/g).map(Number);
+                date = new Date(item[0]).toISOString().substring(0, 10);
+            } catch (e) {
+                console.log('DBF: Date parsing error');
+                date = 'Invalid input date';
+            }
+        } else {
+            date = ' - ';
+        }
+        return date;
     }
 }
