@@ -4,19 +4,22 @@ import {CoreModule} from '../core/core.module';
 import {ThemePickerModule} from './components/theme-picker';
 import {UsersModule} from './containers/users';
 import {DatesRangeModule} from './components/dates-range';
+import {ProgressBarModule} from './components/progress-bar';
 
 @NgModule({
     exports: [
         ThemePickerModule,
         UsersModule,
-        DatesRangeModule
+        DatesRangeModule,
+        ProgressBarModule,
     ],
     imports: [
         CommonModule,
         CoreModule,
         ThemePickerModule,
         UsersModule,
-        DatesRangeModule
+        DatesRangeModule,
+        ProgressBarModule
     ],
 })
 export class SharedModule {

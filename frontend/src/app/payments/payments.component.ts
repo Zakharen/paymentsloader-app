@@ -3,6 +3,7 @@ import {PaymentsService} from './payments.service';
 import {Payment} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
 import {FileDates} from '../shared/components/dates-range/models';
+import {LoaderService} from '../core/services';
 
 @Component({
     selector: 'app-payments',
@@ -14,6 +15,7 @@ export class PaymentsComponent implements OnInit {
     public gridOptions;
 
     constructor(
+        public loaderService: LoaderService,
         private paymentsService: PaymentsService,
         private gridHelper: GridHelper,
     ) {

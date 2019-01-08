@@ -10,8 +10,8 @@
         <app-dates-range [isoString]="true" (formChanged)="datesRangeChanged($event)"></app-dates-range>
     </mat-card-actions>
 </mat-card>
-
 <mat-card class="grid-container">
+    <app-progress-bar [status]="loaderService.isLoading | async"></app-progress-bar>
     <ag-grid-angular
         style="width: 100%; height: 100%;"
         class="ag-theme-material"
