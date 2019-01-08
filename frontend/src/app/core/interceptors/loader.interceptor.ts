@@ -17,7 +17,6 @@ export class LoaderInterceptor implements HttpInterceptor {
     }
 
     removeRequest(req: HttpRequest<any>) {
-        console.log(`REQUESTS NUMBERS = ${this.requests.length}`);
         const i = this.requests.indexOf(req);
         if (i >= 0) {
             this.requests.splice(i, 1);

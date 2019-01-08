@@ -10,6 +10,7 @@ import {FileDates} from './models/';
 export class DatesRangeComponent implements OnInit, OnDestroy {
 
     public datesRangeForm: FormGroup;
+    public errorMsg = 'Date value is required!';
     @Input() isoString = false;
     @Output() formChanged: EventEmitter<FileDates> = new EventEmitter();
 
@@ -29,6 +30,7 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const self = this;
         self.initForm();
+        self.filter();
     }
 
     ngOnDestroy() {
@@ -52,9 +54,11 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
 
     private initForm() {
         const self = this;
+        const today = new Date();
+        const tomorrow = new Date(today.setDate(today.getDate() + 1));
         self.datesRangeForm = self.formBuilder.group({
-            filedatefrom: ['', Validators.required],
-            filedateto: ['', Validators.required],
+            filedatefrom: [today, Validators.required],
+            filedateto: [tomorrow, Validators.required],
         });
     }
 }
