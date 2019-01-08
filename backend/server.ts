@@ -43,7 +43,7 @@ app.use('/api/payments', AuthHelper.verifyRequest, proxy('http://46.164.148.178:
         }
     }
 }));
-app.use('/api/dbfs', proxy('http://46.164.148.178:8001', {
+app.use('/api/dbfs', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => '/Payment/GetDBFExportData',
 }));
 
