@@ -34,12 +34,14 @@ export class UploadDialogComponent implements OnInit {
         const self = this;
         const files: { [key: string]: File } = self.file.nativeElement.files;
         for (const key in files) {
-            // check radix param for:
-            // If the string begins with "0x", the radix is 16 (hexadecimal)
-            // If the string begins with "0", the radix is 8 (octal). This feature is deprecated
-            // If the string begins with any other value, the radix is 10 (decimal)
-            if (!isNaN(parseInt(key, 10))) {
-                self.files.add(files[key]);
+            if (files.hasOwnProperty(key)) {
+                // check radix param for:
+                // If the string begins with "0x", the radix is 16 (hexadecimal)
+                // If the string begins with "0", the radix is 8 (octal). This feature is deprecated
+                // If the string begins with any other value, the radix is 10 (decimal)
+                if (!isNaN(parseInt(key, 10))) {
+                    self.files.add(files[key]);
+                }
             }
         }
     }
@@ -64,7 +66,9 @@ export class UploadDialogComponent implements OnInit {
         console.log(self.progress);
         for (const key in self.progress) {
             if (self.progress.hasOwnProperty(key)) {
-                self.progress[key].progress.subscribe(val => console.log(val));
+                self.progress[key].progress.subscribe(val => {
+                    console.log(val);
+                });
             }
         }
 
@@ -89,16 +93,17 @@ export class UploadDialogComponent implements OnInit {
         self.showCancelButton = false;
 
         // When all progress-observables are completed...
-        forkJoin(allProgressObservables).subscribe(end => {
-            // ... the dialog can be closed again...
-            self.canBeClosed = true;
-            self.dialogRef.disableClose = false;
+        forkJoin(allProgressObservables).subscribe(
+            end => {
+                // ... the dialog can be closed again...
+                self.canBeClosed = true;
+                self.dialogRef.disableClose = false;
 
-            // ... the upload was successful...
-            self.uploadSuccessful = true;
+                // ... the upload was successful...
+                self.uploadSuccessful = true;
 
-            // ... and the component is no longer uploading
-            self.uploading = false;
-        });
+                // ... and the component is no longer uploading
+                self.uploading = false;
+            });
     }
 }

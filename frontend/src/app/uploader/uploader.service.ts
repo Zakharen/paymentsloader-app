@@ -1,7 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest, HttpEventType, HttpResponse} from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import {Observable, Subject, empty} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {RequestHelperService} from '../core/services';
+import {catchError} from 'rxjs/operators';
+import {MatDialog} from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
@@ -9,8 +12,11 @@ import {environment} from '../../environments/environment';
 export class UploaderService {
 
     private url = environment.apiUrl + '/api/upload';
+
     constructor(
+        public dialog: MatDialog,
         private http: HttpClient,
+        private requestHelperService: RequestHelperService,
     ) {
     }
 
@@ -18,6 +24,12 @@ export class UploaderService {
         const self = this;
         // this will be the our resulting map
         const status = {};
+
+        if (files && files.size === 0) {
+            self.requestHelperService.snackBarWarning('There are no selected files!!!');
+            self.dialog.closeAll();
+            return null;
+        }
 
         files.forEach(file => {
             // create a new multipart-form for every file
@@ -35,18 +47,23 @@ export class UploaderService {
 
             // send the http-request and subscribe for progress-updates
             const startTime = new Date().getTime();
-            this.http.request(req).subscribe(event => {
-                if (event.type === HttpEventType.UploadProgress) {
-                    // calculate the progress percentage
-                    const percentDone = Math.round((100 * event.loaded) / event.total);
-                    // pass the percentage into the progress-stream
-                    progress.next(percentDone);
-                } else if (event instanceof HttpResponse) {
-                    // Close the progress-stream if we get an answer form the API
-                    // The upload is complete
-                    progress.complete();
-                }
-            });
+            this.http.request(req)
+                .pipe(catchError(RequestHelperService.handleError))
+                .subscribe(
+                    event => {
+                        if (event.type === HttpEventType.UploadProgress) {
+                            // calculate the progress percentage
+                            const percentDone = Math.round((100 * event.loaded) / event.total);
+                            // pass the percentage into the progress-stream
+                            progress.next(percentDone);
+                        } else if (event instanceof HttpResponse) {
+                            // Close the progress-stream if we get an answer form the API
+                            // The upload is complete
+                            progress.next();
+                            progress.complete();
+                        }
+                    }
+                );
 
             // Save every progress-observable in a map of all observables
             status[file.name] = {
