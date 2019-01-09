@@ -2,7 +2,8 @@ import * as userDB from './_users/users.json';
 import {User} from './controllers/user';
 import {Auth} from './controllers/auth';
 import {AuthHelper, RequestHelper} from './helpers/';
-import {Upload} from "./controllers/upload";
+import {Upload} from './controllers/upload';
+import {PaymentsHelper} from './helpers/payments-helper';
 
 const proxy = require('express-http-proxy');
 const cors = require('cors');
@@ -21,31 +22,17 @@ const authCtrl = new Auth(authHelper);
 const userCtrl = new User(userDB, authHelper);
 const uploadCtrl = new Upload(new IncomingForm());
 
-// set proxy
+// proxy endpoints
 app.use('/api/payments', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => {
         return `/Payment/GetPaymentsData${RequestHelper.paramsParser(req.url)}`;
     },
     userResDecorator: (proxyRes: any, proxyResData: any, userReq: any, userRes: any) => {
-        try {
-            const output = [];
-            const resData = JSON.parse(proxyResData);
-            if (resData && resData instanceof Array) {
-                for (let i = 0; i < resData.length; i++) {
-                    if (resData[i].row_11) {
-                        output.push(resData[i]);
-                    }
-                }
-                return JSON.stringify(output);
-            } else {
-                return proxyResData;
-            }
-        } catch (e) {
-            console.log('/Payment/GetPaymentsData parsing error');
-            return proxyResData;
-        }
+        return PaymentsHelper.paymentsDataParser(proxyResData);
     }
 }));
+app.use('/api/accounts', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
+    proxyReqPathResolver: (req: any) => '/Payment/Getaccountsdata'}));
 app.use('/api/dbfs', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => '/Payment/GetDBFExportData',
 }));

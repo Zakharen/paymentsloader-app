@@ -12,6 +12,7 @@ import {LoaderService} from '../core/services';
 })
 export class PaymentsComponent implements OnInit {
     public payments: Payment[] = [];
+    public accounts: Account[] = [];
     public gridOptions;
 
     constructor(
@@ -23,7 +24,8 @@ export class PaymentsComponent implements OnInit {
 
     ngOnInit() {
         const self = this;
-        self.getPayments();
+        // self.getPayments();
+        self.getPaymentsAccounts();
         self.initGridOptions();
     }
 
@@ -37,6 +39,15 @@ export class PaymentsComponent implements OnInit {
         self.paymentsService.getPayments(dates)
             .subscribe((res: Payment[]) => {
                 self.payments = res;
+            });
+    }
+
+    private getPaymentsAccounts() {
+        const self = this;
+        self.paymentsService.getAccounts()
+            .subscribe((res: Account[]) => {
+                debugger;
+                self.accounts = res;
             });
     }
 
