@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "concurrently \"npm run client\" \"npm run server\"",
     "client": "cd frontend && ng serve --configuration=production",
-    "client:dev": "cd frontend && ng serve",
+    "client:dev": "cd frontend && npx -p @angular/cli ng serve",
     "server": "cd backend && npm run serve",
     "serve:dev": "concurrently \"npm run client:dev\" \"npm run server\"",
     "build:client": "cd frontend && npm run build",
@@ -15,7 +15,8 @@
     "build:www": "npm run build && copyfiles -a frontend/dist www && copyfiles -a backend/lib www",
     "install:client": "cd frontend && npm i",
     "install:server": "cd backend && npm i",
-    "install:app": "npm i && npm run install:client && npm run install:server"
+    "install:app": "npm i && npm run install:client && npm run install:server",
+    "start:prod": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run start:prod\""
   },
   "keywords": [
     "Huspi"
