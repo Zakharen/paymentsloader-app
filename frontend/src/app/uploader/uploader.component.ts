@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {UploaderService} from './uploader.service';
 import {UploadDialogComponent} from '../shared/components/upload-dialog';
@@ -8,8 +8,8 @@ import {UploadDialogComponent} from '../shared/components/upload-dialog';
     templateUrl: './uploader.component.html',
     styleUrls: ['./uploader.component.scss']
 })
-export class UploaderComponent implements OnInit {
-
+export class UploaderComponent implements OnInit, OnDestroy {
+    dialogRef: any;
     constructor(
         public dialog: MatDialog,
         public uploaderService: UploaderService,
@@ -19,8 +19,15 @@ export class UploaderComponent implements OnInit {
     ngOnInit() {
     }
 
+    ngOnDestroy(): void {
+        debugger;
+        const self = this;
+        self.dialogRef.close();
+        self.dialog.closeAll();
+    }
+
     public openUploadDialog() {
         const self = this;
-        const dialogRef = self.dialog.open(UploadDialogComponent, {width: '50%', height: '50%'});
+        self.dialogRef = self.dialog.open(UploadDialogComponent, {width: '50%', height: '50%'});
     }
 }
