@@ -7,29 +7,36 @@ import {catchError} from 'rxjs/operators';
 import {FileDates} from '../shared/components/dates-range/models';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PaymentsService {
 
-  private apiUrl = environment.apiUrl;
+    private apiUrl = environment.apiUrl;
 
-  constructor(
-    private http: HttpClient,
-  ) {
-  }
-
-  /**
-   * Get all payments data
-   */
-  public getPayments(dates?: FileDates) {
-    const self = this;
-    let paramsString = '';
-    if (dates) {
-      const params: any = dates;
-      paramsString = `?filedatefrom=${params.filedatefrom}&filedateto=${params.filedateto}`;
+    constructor(
+        private http: HttpClient,
+    ) {
     }
-    return self.http
-        .get<Payment[]>(`${self.apiUrl}/api/payments${paramsString}`)
-        .pipe(catchError(RequestHelperService.handleError));
-  }
+
+    /**
+     * Get all payments data
+     */
+    public getPayments(dates?: FileDates) {
+        const self = this;
+        let paramsString = '';
+        if (dates) {
+            const params: any = dates;
+            paramsString = `?filedatefrom=${params.filedatefrom}&filedateto=${params.filedateto}`;
+        }
+        return self.http
+            .get<Payment[]>(`${self.apiUrl}/api/payments${paramsString}`)
+            .pipe(catchError(RequestHelperService.handleError));
+    }
+
+    public getAccounts() {
+        const self = this;
+        return self.http
+            .get<Account[]>(`${self.apiUrl}/api/accounts`)
+            .pipe(catchError(RequestHelperService.handleError));
+    }
 }
