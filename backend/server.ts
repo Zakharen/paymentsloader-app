@@ -31,6 +31,11 @@ app.use('/api/payments', AuthHelper.verifyRequest, proxy('http://46.164.148.178:
         return PaymentsHelper.paymentsDataParser(proxyResData);
     }
 }));
+app.use('/api/payment', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
+    proxyReqPathResolver: (req: any) => {
+        return `/Payment/SetPaymentsData?RowId=${req.body.RowId}&Accepted=${req.body.Accepted}`;
+    }
+}));
 app.use('/api/accounts', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => '/Payment/Getaccountsdata'}));
 app.use('/api/dbfs', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {

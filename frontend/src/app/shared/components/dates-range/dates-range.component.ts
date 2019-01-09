@@ -1,6 +1,9 @@
 import {Component, OnInit, EventEmitter, Output, OnDestroy, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FileDates} from './models/';
+import {PaymentsService} from '../../../payments/payments.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
     selector: 'app-dates-range',
@@ -14,6 +17,8 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
     @Input() isoString = false;
     @Output() formChanged: EventEmitter<FileDates> = new EventEmitter();
 
+    private unsubscribe: Subject<void> = new Subject();
+
     public static parseFormValue(dates: FileDates | any, isoString: boolean = false): FileDates {
         if (isoString) {
             return new FileDates(dates.filedatefrom.toISOString().substring(0, 10), dates.filedateto.toISOString().substring(0, 10));
@@ -24,7 +29,19 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
 
     constructor(
         private formBuilder: FormBuilder,
+        private paymentsService: PaymentsService,
     ) {
+        const self = this;
+        self.paymentsService
+            .paymentsUpdateAnnounced$
+            .pipe(takeUntil(self.unsubscribe))
+            .subscribe(
+            status => {
+                if (status) {
+                    self.filter();
+                }
+            }
+        );
     }
 
     ngOnInit() {
@@ -36,6 +53,8 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         const self = this;
         self.clear(false);
+        self.unsubscribe.next();
+        self.unsubscribe.complete();
     }
 
     public filter() {
