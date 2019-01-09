@@ -34,11 +34,11 @@ export class AuthHelper {
     static verifyRequest(req: any, res: any, next: any) {
         const token = AuthHelper.getToken(req);
         if (!token) {
-            return res.status(401).send({error: 'NoTokenError'});
+            return res.status(401).send({error: 'NoTokenError', message: 'User is unauthorized'});
         } else {
             const tokenCheckingResult = AuthHelper.verifyToken(token);
             if (tokenCheckingResult.constructor.name === 'TokenExpiredError') {
-                return res.status(401).send({error: 'TokenExpiredError'});
+                return res.status(401).send({error: 'TokenExpiredError', message: 'User is unauthorized'});
             } else {
                 return next();
             }

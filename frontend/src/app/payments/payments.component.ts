@@ -3,7 +3,7 @@ import {PaymentsService} from './payments.service';
 import {Payment} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
 import {FileDates} from '../shared/components/dates-range/models';
-import {LoaderService} from '../core/services';
+import {LoaderService, RequestHelperService} from '../core/services';
 
 @Component({
     selector: 'app-payments',
@@ -19,12 +19,12 @@ export class PaymentsComponent implements OnInit {
         public loaderService: LoaderService,
         private paymentsService: PaymentsService,
         private gridHelper: GridHelper,
+        private requestHelperService: RequestHelperService,
     ) {
     }
 
     ngOnInit() {
         const self = this;
-        // self.getPayments();
         self.getPaymentsAccounts();
         self.initGridOptions();
     }
@@ -32,6 +32,16 @@ export class PaymentsComponent implements OnInit {
     public datesRangeChanged(dates: FileDates) {
         const self = this;
         self.getPayments(dates);
+    }
+
+    public rowClicked(event: any) {
+        if (event.event.target !== undefined) {
+            const self = this;
+            const actionType = event.event.target.getAttribute('data-action-type');
+            if (actionType === 'set') {
+               self.setPayment(event.data);
+            }
+        }
     }
 
     private getPayments(dates?: FileDates) {
@@ -42,11 +52,23 @@ export class PaymentsComponent implements OnInit {
             });
     }
 
+    private setPayment(rowData: any) {
+        const self = this;
+        self.paymentsService
+            .setPayment(rowData)
+            .subscribe(
+                (res: any) => {
+                    self.requestHelperService.snackBarSuccess('Payment was updated!');
+                    self.paymentsService.announcePaymentsUpdate(true);
+                },
+                (err: any) => self.requestHelperService.snackBarWarning('Payment wasn\'t updated. Try again!'),
+            );
+    }
+
     private getPaymentsAccounts() {
         const self = this;
         self.paymentsService.getAccounts()
             .subscribe((res: Account[]) => {
-                debugger;
                 self.accounts = res;
             });
     }

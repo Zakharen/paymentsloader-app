@@ -5,11 +5,15 @@ import {Payment} from '../shared/models';
 import {RequestHelperService} from '../core/services';
 import {catchError} from 'rxjs/operators';
 import {FileDates} from '../shared/components/dates-range/models';
+import {Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PaymentsService {
+
+    private paymentsWereUpdatedSource = new Subject<boolean>();
+    public paymentsUpdateAnnounced$ = this.paymentsWereUpdatedSource.asObservable();
 
     private apiUrl = environment.apiUrl;
 
@@ -33,10 +37,26 @@ export class PaymentsService {
             .pipe(catchError(RequestHelperService.handleError));
     }
 
+    public setPayment(payment: Payment) {
+        const self = this;
+        const param = {
+            RowId: payment.Id,
+            Accepted: payment.row_11 === 'False' ? 'True' : 'False',
+        };
+        return self.http
+            .post(`${self.apiUrl}/api/payment`, param)
+            .pipe(catchError(RequestHelperService.handleError));
+    }
+
     public getAccounts() {
         const self = this;
         return self.http
             .get<Account[]>(`${self.apiUrl}/api/accounts`)
             .pipe(catchError(RequestHelperService.handleError));
+    }
+
+    public announcePaymentsUpdate(status: boolean) {
+        const self = this;
+        self.paymentsWereUpdatedSource.next(status);
     }
 }
