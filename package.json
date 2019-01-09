@@ -12,7 +12,10 @@
     "build:client": "cd frontend && npm run build",
     "build:server": "cd backend && npm run build",
     "build": "npm run build:client && npm run build:server",
-    "build:www": "npm run build && copyfiles -a frontend/dist www && copyfiles -a backend/lib www"
+    "build:www": "npm run build && copyfiles -a frontend/dist www && copyfiles -a backend/lib www",
+    "install:client": "cd frontend && npm i",
+    "install:server": "cd backend && npm i",
+    "install:app": "npm i && npm run install:client && npm run install:server"
   },
   "keywords": [
     "Huspi"

@@ -5,6 +5,7 @@ import {ThemePickerModule} from './components/theme-picker';
 import {UsersModule} from './containers/users';
 import {DatesRangeModule} from './components/dates-range';
 import {ProgressBarModule} from './components/progress-bar';
+import {UploadDialogModule} from './components/upload-dialog';
 
 @NgModule({
     exports: [
@@ -12,6 +13,7 @@ import {ProgressBarModule} from './components/progress-bar';
         UsersModule,
         DatesRangeModule,
         ProgressBarModule,
+        UploadDialogModule,
     ],
     imports: [
         CommonModule,
@@ -19,7 +21,8 @@ import {ProgressBarModule} from './components/progress-bar';
         ThemePickerModule,
         UsersModule,
         DatesRangeModule,
-        ProgressBarModule
+        ProgressBarModule,
+        UploadDialogModule,
     ],
 })
 export class SharedModule {
