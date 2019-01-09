@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --configuration=production",
+    "start:prod": "node node_modules/http-server/bin/http-server ./dist/paymentloader-app -p 4200 -P http://localhost:4200/",
     "start:dev": "ng serve",
     "build": "ng build --configuration=production",
     "test": "ng test",
