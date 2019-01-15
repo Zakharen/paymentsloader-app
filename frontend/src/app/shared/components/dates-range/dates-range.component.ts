@@ -6,6 +6,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import * as moment from 'moment';
 import {environment} from '../../../../environments/environment';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-dates-range',
@@ -34,6 +35,7 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
     constructor(
         private formBuilder: FormBuilder,
         private paymentsService: PaymentsService,
+        private translate: TranslateService,
     ) {
         const self = this;
         self.paymentsService
@@ -46,6 +48,7 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
                 }
             }
         );
+        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {

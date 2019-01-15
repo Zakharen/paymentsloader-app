@@ -3,8 +3,8 @@
         <div mat-card-avatar class="example-header-logo">
             <mat-icon aria-label="Administrator's configuration board" color="primary" class="admin-icon">usb</mat-icon>
         </div>
-        <mat-card-title>Administrator</mat-card-title>
-        <mat-card-subtitle>Page provides administrative possibilities. Be careful using this page.</mat-card-subtitle>
+        <mat-card-title>{{ 'admin.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'admin.subTitle' | translate }}</mat-card-subtitle>
     </mat-card-header>
 </mat-card>
 
@@ -12,31 +12,35 @@
     <mat-expansion-panel class="panel" [expanded]="step === 1" (opened)="setStep(1)">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                Add user
+                {{ 'admin.page.usersCreate.title' | translate }}
             </mat-panel-title>
             <mat-panel-description>
-                Create new user
+                {{ 'admin.page.usersCreate.subTitle' | translate }}
             </mat-panel-description>
         </mat-expansion-panel-header>
 
         <form [formGroup]="registerForm">
             <mat-form-field class="field">
-                <input matInput type="text" placeholder="Name" formControlName="name" required>
+                <input matInput type="text" placeholder="{{ 'admin.page.usersCreate.form.name' | translate }}"
+                       formControlName="name" required>
                 <mat-error *ngIf="registerForm.controls['name'].invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput type="email" placeholder="Email" formControlName="email" required>
+                <input matInput type="email" placeholder="{{ 'admin.page.usersCreate.form.email' | translate }}"
+                       formControlName="email" required>
                 <mat-error *ngIf="registerForm.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <input matInput type="password" placeholder="{{ 'admin.page.usersCreate.form.password' | translate }}"
+                       formControlName="password" required>
                 <mat-error *ngIf="registerForm.controls['password'].invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="field">
-                <mat-select placeholder="Credential" formControlName="type">
+                <mat-select placeholder="{{ 'admin.page.usersCreate.form.credential' | translate }}"
+                            formControlName="type">
                     <mat-option *ngFor="let role of roles" [value]="role.value">
                         {{role.viewValue}}
                     </mat-option>
@@ -45,10 +49,12 @@
         </form>
 
         <mat-action-row>
-            <button mat-stroked-button class="btn" color="warn" (click)="refreshForm()">Cancel
+            <button mat-stroked-button class="btn" color="warn" (click)="refreshForm()">
+                {{ 'admin.page.usersCreate.actions.cancel' | translate }}
             </button>
             <button mat-stroked-button class="btn" color="primary" type="submit" (click)="addUser()"
-                    [disabled]="registerForm.invalid">Save
+                    [disabled]="registerForm.invalid">
+                {{ 'admin.page.usersCreate.actions.save' | translate }}
             </button>
         </mat-action-row>
     </mat-expansion-panel>
@@ -56,10 +62,10 @@
                          class="panel">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                Users
+                {{ 'admin.page.users.title' | translate }}
             </mat-panel-title>
             <mat-panel-description>
-                Represent a list of available users
+                {{ 'admin.page.users.subTitle' | translate }}
             </mat-panel-description>
         </mat-expansion-panel-header>
 

@@ -8,11 +8,11 @@ export class GridHelper {
 
     private static getColumnsDefinitions() {
         return [
-            {headerName: 'Name', field: 'name'},
+            {headerName: 'Ім\'я користувача', field: 'name'},
             {headerName: 'Email', field: 'email'},
-            {headerName: 'Credential', field: 'type'},
+            {headerName: 'Тип користувача', field: 'type'},
             {
-                headerName: 'Actions',
+                headerName: 'Дії',
                 suppressSorting: true,
                 suppressFilter: true,
                 suppressNavigable: true,

@@ -3,8 +3,8 @@
         <div mat-card-avatar class="example-header-logo">
             <mat-icon aria-label="Payments" color="primary" class="table-chart">table_chart</mat-icon>
         </div>
-        <mat-card-title>Payments</mat-card-title>
-        <mat-card-subtitle>The current page content displays an actual payments data</mat-card-subtitle>
+        <mat-card-title>{{ 'payments.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'payments.subTitle' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
         <app-dates-range [isoString]="true" (formChanged)="datesRangeChanged($event)"></app-dates-range>
@@ -12,7 +12,7 @@
             <mat-icon class="material-icons">
                 attach_file
             </mat-icon>
-            Upload payment
+            {{ 'payments.page.uploadPayments' | translate }}
         </button>
     </mat-card-actions>
 </mat-card>

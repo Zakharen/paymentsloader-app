@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+    constructor(
+        private translate: TranslateService,
+    ) {
+        translate.setDefaultLang('ua');
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
+    switchLanguage(language: string) {
+        this.translate.use(language);
+    }
 }

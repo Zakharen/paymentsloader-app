@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from './admin.service';
 import {first} from 'rxjs/operators';
 import {RequestHelperService} from '../core/services';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-admin',
@@ -21,7 +22,9 @@ export class AdminComponent implements OnInit {
         private formBuilder: FormBuilder,
         private adminService: AdminService,
         private requestHelper: RequestHelperService,
+        private translate: TranslateService,
     ) {
+        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {
@@ -49,7 +52,7 @@ export class AdminComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 result => {
-                    self.requestHelper.snackBarSuccess('New user was created!');
+                    self.requestHelper.snackBarSuccess('Додано новго користувача!');
                     self.refreshForm();
                     self.adminService.announceUserWasAdded(true);
                 },
@@ -65,8 +68,8 @@ export class AdminComponent implements OnInit {
 
     getErrorMessage() {
         const self = this;
-        return self.registerForm.controls.email.hasError('required') ? 'You must enter a value' :
-            self.registerForm.controls.email.hasError('email') ? 'Not a valid email' :
+        return self.registerForm.controls.email.hasError('required') ? 'Поле має бути заповнене' :
+            self.registerForm.controls.email.hasError('email') ? 'Невалідне значення Email' :
                 '';
     }
 }

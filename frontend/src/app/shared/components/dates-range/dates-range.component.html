@@ -1,13 +1,13 @@
 <form [formGroup]="datesRangeForm" class="dates-range-form">
     <mat-form-field>
-        <input matInput [matDatepicker]="filedatefrom" placeholder="Files from" formControlName="filedatefrom" required>
+        <input matInput [matDatepicker]="filedatefrom" placeholder="{{'shared.components.datesRange.from' | translate}}" formControlName="filedatefrom" required>
         <mat-datepicker-toggle matSuffix [for]="filedatefrom"></mat-datepicker-toggle>
         <mat-datepicker #filedatefrom></mat-datepicker>
         <mat-error *ngIf="datesRangeForm.controls['filedatefrom'].hasError('required')">{{errorMsg}}</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput [matDatepicker]="filedateto" placeholder="to" formControlName="filedateto"
+        <input matInput [matDatepicker]="filedateto" placeholder="{{'shared.components.datesRange.to' | translate}}" formControlName="filedateto"
                [min]="datesRangeForm.controls['filedatefrom'].value" required>
         <mat-datepicker-toggle matSuffix [for]="filedateto"></mat-datepicker-toggle>
         <mat-datepicker #filedateto></mat-datepicker>

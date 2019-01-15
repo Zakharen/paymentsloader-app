@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {PaymentsService} from './payments.service';
 import {Payment} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
 import {FileDates} from '../shared/components/dates-range/models';
 import {LoaderService, RequestHelperService} from '../core/services';
-import {MatDialog} from "@angular/material";
-import {UploadDialogComponent} from "../shared/components/upload-dialog";
+import {MatDialog} from '@angular/material';
+import {UploadDialogComponent} from '../shared/components/upload-dialog';
 
 @Component({
     selector: 'app-payments',
@@ -23,7 +24,9 @@ export class PaymentsComponent implements OnInit, OnDestroy {
         private paymentsService: PaymentsService,
         private gridHelper: GridHelper,
         private requestHelperService: RequestHelperService,
+        private translate: TranslateService,
     ) {
+        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {
