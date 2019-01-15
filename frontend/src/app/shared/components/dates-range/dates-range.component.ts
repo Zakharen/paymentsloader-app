@@ -4,6 +4,8 @@ import {FileDates} from './models/';
 import {PaymentsService} from '../../../payments/payments.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import * as moment from 'moment';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-dates-range',
@@ -21,7 +23,9 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
 
     public static parseFormValue(dates: FileDates | any, isoString: boolean = false): FileDates {
         if (isoString) {
-            return new FileDates(dates.filedatefrom.toISOString().substring(0, 10), dates.filedateto.toISOString().substring(0, 10));
+            const from = moment(dates.filedatefrom).format(environment.dateTime.apiIsoFormat);
+            const to = moment(dates.filedateto).format(environment.dateTime.apiIsoFormat);
+            return new FileDates(from, to);
         } else {
             return dates;
         }

@@ -56,9 +56,9 @@ export class UploadDialogComponent implements OnInit {
         // upload code goes here
         const self = this;
         self.uploaderService
-            .load(this.selectedFile)
+            .load(self.selectedFile)
             .subscribe(
-                event => {
+                (event: any) => {
                     if (event.type === HttpEventType.UploadProgress) {
                         // calculate the progress percentage
                         self.percentDone = Math.round((100 * event.loaded) / event.total);

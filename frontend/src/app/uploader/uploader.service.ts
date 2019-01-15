@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpRequest, HttpEventType, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject, empty} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {RequestHelperService} from '../core/services';
@@ -79,13 +79,22 @@ export class UploaderService {
         const self = this;
 
         const formData: FormData = new FormData();
-        formData.append('file', file, file.name);
+        formData.append('file', file);
 
-        const req = new HttpRequest('POST', self.url, formData, {
-            reportProgress: true
-        });
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        // const options = new RequestOptions({ headers: headers });
 
-        return self.http.request(req)
+        // const req = new HttpRequest('POST', self.url, formData, {
+        //     reportProgress: true
+        // });
+
+        return self.http
+            .post(self.url, formData, { reportProgress: true, headers: headers })
             .pipe(catchError(RequestHelperService.handleError));
+
+        // return self.http.request(req)
+        //     .pipe(catchError(RequestHelperService.handleError));
     }
 }

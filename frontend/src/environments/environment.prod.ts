@@ -4,5 +4,8 @@ export const environment = {
   storageKeys: {
     userCredentials: 'credentials',
     token: 'access_token'
+  },
+  dateTime: {
+    apiIsoFormat: 'YYYY-MM-DD'
   }
 };
