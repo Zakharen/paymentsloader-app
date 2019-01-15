@@ -40,7 +40,16 @@ export class UploadDialogComponent implements OnInit {
     }
 
     onFileChanged(event) {
-        this.selectedFile = event.target.files[0];
+        const self = this;
+        self.selectedFile = event.target.files[0];
+        if (self.selectedFile && self.selectedFile instanceof File) {
+            const fileExtension = self.selectedFile.name.split('.').pop();
+            if (fileExtension !== 'xls') {
+                self.fileNotSupported();
+            }
+        } else {
+            self.fileNotSupported();
+        }
     }
 
     onUpload() {
@@ -67,6 +76,13 @@ export class UploadDialogComponent implements OnInit {
                     }
                 }
             );
+    }
+
+    private fileNotSupported() {
+        const self = this,
+            wrongExtensionMsg = 'File not supported! *.XLS only';
+        self.selectedFile = null;
+        self.requestHelperService.snackBarWarning(wrongExtensionMsg);
     }
 
     /*
