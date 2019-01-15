@@ -3,6 +3,7 @@ import {DbfService} from './dbf.service';
 import {Dbf} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
 import {LoaderService} from '../core/services';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-dbf',
@@ -17,7 +18,9 @@ export class DbfComponent implements OnInit {
         public loaderService: LoaderService,
         private dbfService: DbfService,
         private gridHelper: GridHelper,
+        private translate: TranslateService,
     ) {
+        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {

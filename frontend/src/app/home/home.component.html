@@ -1,39 +1,46 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches"fillerContent>
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button class="menu" (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <mat-icon aria-label="Payments Stored App">beenhere</mat-icon>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" fillerContent>
+    <mat-toolbar color="primary" class="example-toolbar">
+        <button mat-icon-button class="menu" (click)="snav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-icon aria-label="Payments Stored App">beenhere</mat-icon>
 
-    <h1 class="example-app-name logo" [routerLink]="['/dashboard']">
-      Payments App
-    </h1>
+        <h1 class="example-app-name logo" [routerLink]="['/dashboard']">
+            {{ 'app.title' | translate}}
+        </h1>
 
-    <span class="example-spacer"></span>
-    <button mat-icon-button (click)="logout()">
-      <mat-icon aria-label="Logout">exit_to_app</mat-icon>
-    </button>
-  </mat-toolbar>
+        <span class="example-spacer"></span>
+        <button mat-icon-button (click)="logout()">
+            <mat-icon aria-label="Logout">exit_to_app</mat-icon>
+        </button>
+    </mat-toolbar>
 
-  <mat-sidenav-container class="example-sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-      <mat-nav-list>
-        <a mat-list-item [routerLink]="['/payments']">
-          <mat-icon aria-label="Payments" color="primary" class="menu-item">table_chart</mat-icon>Payments</a>
-        <a mat-list-item [routerLink]="['/dbf']">
-          <mat-icon aria-label="DBFs" color="primary" class="menu-item">table_chart</mat-icon>DBFs</a>
-        <a mat-list-item [routerLink]="['/upload']">
-          <mat-icon aria-label="Uploads" color="primary" class="menu-item">cloud_download</mat-icon>Uploads</a>
-        <a mat-list-item [routerLink]="['/settings']">
-          <mat-icon aria-label="App settings" color="primary" class="menu-item">settings_applications</mat-icon>App settings</a>
-        <a *ngIf="isAdmin" mat-list-item [routerLink]="['/admin']">
-          <mat-icon aria-label="Administrator" color="primary" class="menu-item">usb</mat-icon>Administrator</a>
-      </mat-nav-list>
-    </mat-sidenav>
+    <mat-sidenav-container class="example-sidenav-container"
+                           [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                     [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="['/payments']">
+                    <mat-icon aria-label="Payments" color="primary" class="menu-item">table_chart</mat-icon>
+                    {{ 'payments.title' | translate }}</a>
+                <a mat-list-item [routerLink]="['/dbf']">
+                    <mat-icon aria-label="DBFs" color="primary" class="menu-item">table_chart</mat-icon>
+                    {{ 'dbf.title' | translate }}</a>
+                <!--<a mat-list-item [routerLink]="['/upload']">-->
+                <!--<mat-icon aria-label="Uploads" color="primary" class="menu-item">cloud_download</mat-icon>Uploads</a>-->
+                <a mat-list-item [routerLink]="['/settings']">
+                    <mat-icon aria-label="App settings" color="primary" class="menu-item">settings_applications
+                    </mat-icon>
+                    {{ 'settings.title' | translate }}</a>
+                <a *ngIf="isAdmin" mat-list-item [routerLink]="['/admin']">
+                    <mat-icon aria-label="Administrator" color="primary" class="menu-item">usb</mat-icon>
+                    {{ 'admin.title' | translate }}</a>
+            </mat-nav-list>
+        </mat-sidenav>
 
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
 
-  </mat-sidenav-container>
+    </mat-sidenav-container>
 </div>

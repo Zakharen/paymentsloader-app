@@ -1,19 +1,19 @@
 <mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-logo">
-      <mat-icon aria-label="DBFs" color="primary" class="table-chart">table_chart</mat-icon>
-    </div>
-    <mat-card-title>DBFs</mat-card-title>
-    <mat-card-subtitle>The current page content displays an actual DBFs data</mat-card-subtitle>
-  </mat-card-header>
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-logo">
+            <mat-icon aria-label="DBFs" color="primary" class="table-chart">table_chart</mat-icon>
+        </div>
+        <mat-card-title>{{ 'dbf.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'dbf.subTitle' | translate }}</mat-card-subtitle>
+    </mat-card-header>
 </mat-card>
 
 <mat-card class="grid-container">
-  <app-progress-bar [status]="loaderService.isLoading | async"></app-progress-bar>
-  <ag-grid-angular
-          style="width: 100%; height: 100%;"
-          class="ag-theme-material"
-          [rowData]="dbfs"
-          [gridOptions]="gridOptions"
-  ></ag-grid-angular>
+    <app-progress-bar [status]="loaderService.isLoading | async"></app-progress-bar>
+    <ag-grid-angular
+            style="width: 100%; height: 100%;"
+            class="ag-theme-material"
+            [rowData]="dbfs"
+            [gridOptions]="gridOptions"
+    ></ag-grid-angular>
 </mat-card>

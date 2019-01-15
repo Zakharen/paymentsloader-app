@@ -82,8 +82,8 @@ export class UploaderService {
         formData.append('file', file);
 
         const headers = new HttpHeaders();
-        headers.append('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
+        headers.append('content-type', undefined); // 'multipart/form-data'
+        // headers.append('Accept', 'application/json');
         // const options = new RequestOptions({ headers: headers });
 
         // const req = new HttpRequest('POST', self.url, formData, {
