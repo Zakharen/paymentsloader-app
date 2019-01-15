@@ -1,3 +1,14 @@
 .dates-range-form {
   margin: 0 3%
 }
+
+.filter-btn {
+  margin-left: 1%;
+}
+
+// used to solve mobile view
+@media (max-width : 500px) {
+  .filter-btn {
+    margin-left: 5%;
+  }
+}

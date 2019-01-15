@@ -1,7 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {UploaderService} from '../../../uploader/uploader.service';
-import {forkJoin} from 'rxjs';
+import {forkJoin, Subject} from 'rxjs';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
+import {RequestHelperService} from '../../../core/services';
 
 @Component({
     selector: 'app-upload-dialog',
@@ -10,6 +12,7 @@ import {forkJoin} from 'rxjs';
 })
 export class UploadDialogComponent implements OnInit {
 
+    /*
     @ViewChild('file') file: any;
 
     public files: Set<File> = new Set();
@@ -20,19 +23,73 @@ export class UploadDialogComponent implements OnInit {
     public showCancelButton = true;
     public uploading = false;
     public uploadSuccessful = false;
+    */
+
+    selectedFile: File;
+    progress: Subject<number> = new Subject<number>();
+    percentDone = 0;
 
     constructor(
         public dialogRef: MatDialogRef<UploadDialogComponent>,
-        public uploaderService: UploaderService
+        public uploaderService: UploaderService,
+        private requestHelperService: RequestHelperService,
     ) {
     }
 
     ngOnInit() {
     }
 
+    onFileChanged(event) {
+        const self = this;
+        self.selectedFile = event.target.files[0];
+        if (self.selectedFile && self.selectedFile instanceof File) {
+            const fileExtension = self.selectedFile.name.split('.').pop();
+            if (fileExtension !== 'xls') {
+                self.fileNotSupported();
+            }
+        } else {
+            self.fileNotSupported();
+        }
+    }
+
+    onUpload() {
+        // upload code goes here
+        const self = this;
+        self.uploaderService
+            .load(self.selectedFile)
+            .subscribe(
+                (event: any) => {
+                    if (event.type === HttpEventType.UploadProgress) {
+                        // calculate the progress percentage
+                        self.percentDone = Math.round((100 * event.loaded) / event.total);
+                    } else if (event instanceof HttpResponse) {
+                        // Close the progress-stream if we get an answer form the API
+                        // The upload is complete
+                        if (event.status === 200 && event.statusText === 'OK') {
+                            self.percentDone = 100;
+                            self.requestHelperService.snackBarSuccess('File successfully uploaded!');
+                            self.dialogRef.close();
+                        } else {
+                            self.requestHelperService.snackBarWarning('File upload error!');
+                            self.dialogRef.close();
+                        }
+                    }
+                }
+            );
+    }
+
+    private fileNotSupported() {
+        const self = this,
+            wrongExtensionMsg = 'File not supported! *.XLS only';
+        self.selectedFile = null;
+        self.requestHelperService.snackBarWarning(wrongExtensionMsg);
+    }
+
+    /*
     public onFilesAdded() {
         const self = this;
         const files: { [key: string]: File } = self.file.nativeElement.files;
+        debugger;
         for (const key in files) {
             if (files.hasOwnProperty(key)) {
                 // check radix param for:
@@ -53,6 +110,7 @@ export class UploadDialogComponent implements OnInit {
 
     public closeDialog() {
         const self = this;
+        debugger;
         // if everything was uploaded already, just close the dialog
         if (self.uploadSuccessful) {
             return self.dialogRef.close();
@@ -106,4 +164,5 @@ export class UploadDialogComponent implements OnInit {
                 self.uploading = false;
             });
     }
+    */
 }
