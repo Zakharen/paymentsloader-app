@@ -27,6 +27,6 @@ export class UploaderComponent implements OnInit, OnDestroy {
      */
     public openUploadDialog() {
         const self = this;
-        self.dialogRef = self.dialog.open(UploadDialogComponent, {width: '50%', height: '50%'});
+        self.dialogRef = self.dialog.open(UploadDialogComponent, {width: '40%', height: '27%'});
     }
 }

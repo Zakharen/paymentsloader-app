@@ -14,7 +14,7 @@
         <mat-error *ngIf="datesRangeForm.controls['filedateto'].hasError('required')">{{errorMsg}}</mat-error>
     </mat-form-field>
 
-    <button mat-icon-button color="primary" type="submit" [disabled]="datesRangeForm.invalid" (click)="filter()">
+    <button class="filter-btn" mat-icon-button color="primary" type="submit" [disabled]="datesRangeForm.invalid" (click)="filter()">
         <mat-icon aria-label="Find files per dates range">check_circle_outline</mat-icon>
     </button>
 

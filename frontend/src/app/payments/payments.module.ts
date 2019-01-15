@@ -9,6 +9,7 @@ import {SharedModule} from '../shared/shared.module';
 import {PaymentsComponent} from './payments.component';
 import {PaymentsService} from './payments.service';
 import {GridHelper} from './helpers/grid.helper';
+import {UploadDialogComponent} from '../shared/components/upload-dialog';
 
 @NgModule({
     declarations: [PaymentsComponent],
@@ -20,6 +21,7 @@ import {GridHelper} from './helpers/grid.helper';
         SharedModule,
         AgGridModule.withComponents([PaymentsComponent]),
     ],
+    entryComponents: [UploadDialogComponent],
     providers: [
         PaymentsService,
         GridHelper

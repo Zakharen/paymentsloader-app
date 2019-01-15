@@ -1,21 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PaymentsService} from './payments.service';
 import {Payment} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
 import {FileDates} from '../shared/components/dates-range/models';
 import {LoaderService, RequestHelperService} from '../core/services';
+import {MatDialog} from "@angular/material";
+import {UploadDialogComponent} from "../shared/components/upload-dialog";
 
 @Component({
     selector: 'app-payments',
     templateUrl: './payments.component.html',
     styleUrls: ['./payments.component.scss']
 })
-export class PaymentsComponent implements OnInit {
+export class PaymentsComponent implements OnInit, OnDestroy {
     public payments: Payment[] = [];
     public accounts: Account[] = [];
     public gridOptions;
 
     constructor(
+        public dialog: MatDialog,
         public loaderService: LoaderService,
         private paymentsService: PaymentsService,
         private gridHelper: GridHelper,
@@ -29,6 +32,16 @@ export class PaymentsComponent implements OnInit {
         self.initGridOptions();
     }
 
+    ngOnDestroy(): void {
+        const self = this;
+        self.dialog.closeAll();
+    }
+
+    public openUploadDialog() {
+        const self = this;
+        self.dialog.open(UploadDialogComponent, {width: '40%', height: '27%'});
+    }
+
     public datesRangeChanged(dates: FileDates) {
         const self = this;
         self.getPayments(dates);
@@ -39,7 +52,7 @@ export class PaymentsComponent implements OnInit {
             const self = this;
             const actionType = event.event.target.getAttribute('data-action-type');
             if (actionType === 'set') {
-               self.setPayment(event.data);
+                self.setPayment(event.data);
             }
         }
     }

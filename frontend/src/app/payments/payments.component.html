@@ -8,15 +8,21 @@
     </mat-card-header>
     <mat-card-actions>
         <app-dates-range [isoString]="true" (formChanged)="datesRangeChanged($event)"></app-dates-range>
+        <button class="upload-file-btn" mat-stroked-button color="primary" (click)="openUploadDialog()">
+            <mat-icon class="material-icons">
+                attach_file
+            </mat-icon>
+            Upload payment
+        </button>
     </mat-card-actions>
 </mat-card>
 <mat-card class="grid-container">
     <app-progress-bar [status]="loaderService.isLoading | async"></app-progress-bar>
     <ag-grid-angular
-        style="width: 100%; height: 100%;"
-        class="ag-theme-material"
-        [rowData]="payments"
-        (rowClicked)="rowClicked($event)"
-        [gridOptions]="gridOptions"
+            style="width: 100%; height: 100%;"
+            class="ag-theme-material"
+            [rowData]="payments"
+            (rowClicked)="rowClicked($event)"
+            [gridOptions]="gridOptions"
     ></ag-grid-angular>
 </mat-card>

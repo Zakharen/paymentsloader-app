@@ -74,4 +74,18 @@ export class UploaderService {
         // return the map of progress.observables
         return status;
     }
+
+    public load(file: File) {
+        const self = this;
+
+        const formData: FormData = new FormData();
+        formData.append('file', file, file.name);
+
+        const req = new HttpRequest('POST', self.url, formData, {
+            reportProgress: true
+        });
+
+        return self.http.request(req)
+            .pipe(catchError(RequestHelperService.handleError));
+    }
 }
