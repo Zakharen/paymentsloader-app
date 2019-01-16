@@ -18,9 +18,9 @@ app.options('*', cors());
 
 // Handle POST requests that come in formatted as JSON
 app.use(express.json());
-// app.use(bodyParser.json({limit: '10mb'})); // Parse application/json
-// app.use(bodyParser.raw({limit: '10mb'})); // Parse multipart/form-data
-// app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use(bodyParser.json({limit: '10mb'})); // Parse application/json
+app.use(bodyParser.raw({limit: '10mb'})); // Parse multipart/form-data
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(fileUpload());
 
 const authHelper = new AuthHelper(userDB);
@@ -48,29 +48,35 @@ app.use('/api/accounts', AuthHelper.verifyRequest, proxy('http://46.164.148.178:
 app.use('/api/dbfs', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => '/Payment/GetDBFExportData',
 }));
-// post : uploadCtrl.file
-app.use('/api/upload', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
-    parseReqBody: false,
+app.use('/api/uploadwww', AuthHelper.verifyRequest, proxy('http://192.168.1.156:50048', {
+    limit: '5mb',
+    preserveHostHdr: true,
+    reqAsBuffer: true,
+    // parseReqBody: false,
     // reqBodyEncoding: null,
-    // proxyReqOptDecorator: (proxyReqOpts: any, srcReq: any) => {
-    //     // proxyReqOpts.headers['Content-Type'] = 'multipart/form-data';
-    //     // proxyReqOpts.headers['Accept'] = 'application/json';
-    //     proxyReqOpts.path = '/UploadFile/UploadFile_v2';
-    //
-    //     console.log('++++++++++++++++++++++');
-    //     // console.log(proxyReqOpts.method);
-    //     // console.log(proxyReqOpts.headers);
-    //     console.log(proxyReqOpts);
-    //     console.log('++++++++++++++++++++++');
-    //
-    //     return proxyReqOpts;
-    // },
-    proxyReqPathResolver: (req: any) => {
+    proxyReqOptDecorator: (proxyReqOpts: any, srcReq: any) => {
+        // proxyReqOpts.headers['Content-Type'] = 'multipart/form-data';
+        // proxyReqOpts.headers['Accept'] = 'application/json';
+
         console.log('++++++++++++++++++++++');
-        console.log(req.headers);
+        console.log('++++++++++++++++++++++');
+        console.log('++++++++++++++++++++++');
+        console.log('srcReq', srcReq.headers);
+        console.log('++++++++++++++++++++++');
+        console.log('++++++++++++++++++++++');
+
+        proxyReqOpts.headers = JSON.parse(JSON.stringify(srcReq.headers));
+
+        console.log('proxyReqOpts', proxyReqOpts.headers);
+
+        return proxyReqOpts;
+    },
+    proxyReqPathResolver: (req: any) => {
         return '/UploadFile/UploadFile_v2';
     }
 }));
+
+app.post('/api/upload', uploadCtrl.file);
 
 app.post('/api/login', authCtrl.login);
 app.get('/api/user', AuthHelper.verifyRequest, userCtrl.users);

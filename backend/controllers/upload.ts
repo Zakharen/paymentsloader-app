@@ -13,16 +13,18 @@ export class Upload {
         console.log('========= upload ctrl ============');
 
         try {
+
             this.form.parse(req);
 
             this.form.on('fileBegin', (name: any, file: any) => {
-                console.log('=== fileBegin && __dirname is ', __dirname);
                 file.path = __dirname + '/data/' + file.name;
             });
 
             this.form.on('file', (name: any, file: any) => {
                 console.log('Uploaded ' + file.name);
             });
+
+            console.log('========= upload TRY-ED ============');
 
             // this.form.on('end', () => {
             //     // res.json();
