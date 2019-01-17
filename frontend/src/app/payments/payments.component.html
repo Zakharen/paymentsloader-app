@@ -14,6 +14,12 @@
             </mat-icon>
             {{ 'payments.page.uploadPayments' | translate }}
         </button>
+        <button class="pre-payment-btn" mat-stroked-button color="primary" (click)="openPrepaymentDialog()">
+            <mat-icon class="material-icons">
+                note_add
+            </mat-icon>
+            {{ 'payments.page.prePayments' | translate }}
+        </button>
     </mat-card-actions>
 </mat-card>
 <mat-card class="grid-container">

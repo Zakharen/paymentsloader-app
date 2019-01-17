@@ -7,6 +7,7 @@ import {LoaderService, RequestHelperService} from '../core/services';
 import {MatDialog} from '@angular/material';
 import {UploadDialogComponent} from '../shared/components/upload-dialog';
 import {TranslateService} from '@ngx-translate/core';
+import {PrePaymentComponent} from '../shared/components/pre-payment';
 
 @Component({
     selector: 'app-payments',
@@ -15,7 +16,6 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class PaymentsComponent implements OnInit, OnDestroy {
     public payments: Payment[] = [];
-    public accounts: Account[] = [];
     public gridOptions;
 
     private updateSuccess: string;
@@ -34,7 +34,6 @@ export class PaymentsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const self = this;
         self.setLocalization();
-        self.getPaymentsAccounts();
         self.initGridOptions();
     }
 
@@ -46,6 +45,11 @@ export class PaymentsComponent implements OnInit, OnDestroy {
     public openUploadDialog() {
         const self = this;
         self.dialog.open(UploadDialogComponent, {width: 'auto', height: 'auto'});
+    }
+
+    public openPrepaymentDialog() {
+        const self = this;
+        self.dialog.open(PrePaymentComponent, {width: 'auto', height: 'auto'});
     }
 
     public datesRangeChanged(dates: FileDates) {
@@ -82,14 +86,6 @@ export class PaymentsComponent implements OnInit, OnDestroy {
                 },
                 (err: any) => self.requestHelperService.snackBarWarning(self.updateError),
             );
-    }
-
-    private getPaymentsAccounts() {
-        const self = this;
-        self.paymentsService.getAccounts()
-            .subscribe((res: Account[]) => {
-                self.accounts = res;
-            });
     }
 
     private initGridOptions() {

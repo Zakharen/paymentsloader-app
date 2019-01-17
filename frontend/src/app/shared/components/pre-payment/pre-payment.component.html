@@ -1,0 +1,44 @@
+<mat-card-header>
+    <div mat-card-avatar class="example-header-logo">
+        <mat-icon color="primary" class="note-add">note_add</mat-icon>
+    </div>
+    <mat-card-title>{{ 'shared.components.pre-payment.title' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'shared.components.pre-payment.subTitle' | translate }}</mat-card-subtitle>
+</mat-card-header>
+
+<mat-card-content>
+
+    <form [formGroup]="form">
+        <mat-form-field class="example-full-width">
+            <mat-select placeholder="{{ 'shared.components.pre-payment.form.template' | translate }}"
+                        formControlName="templateId">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let account of accountsList" [value]="account.templateId">
+                    {{account.account}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['templateId'].hasError('required')">Please choose an animal</mat-error>
+            <mat-hint>{{form.controls['templateId'].value?.sound}}</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <textarea #narrativeMsg matInput
+                      placeholder="{{ 'shared.components.pre-payment.form.narrative' | translate }}"
+                      formControlName="narrative" required></textarea>
+
+            <mat-error *ngIf="form.controls['narrative'].invalid">required!!!</mat-error>
+            <mat-hint align="start">
+                <!--{{form.controls['narrative'].value?.sound}}-->
+                <strong>Don't disclose personal info</strong>
+            </mat-hint>
+            <mat-hint align="end">{{narrativeMsg.value.length}} / 256</mat-hint>
+        </mat-form-field>
+    </form>
+
+</mat-card-content>
+
+<mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+</mat-card-actions>
+

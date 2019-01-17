@@ -6,6 +6,7 @@ import {UsersModule} from './containers/users';
 import {DatesRangeModule} from './components/dates-range';
 import {ProgressBarModule} from './components/progress-bar';
 import {UploadDialogModule} from './components/upload-dialog';
+import {PrePaymentModule} from './components/pre-payment';
 
 @NgModule({
     exports: [
@@ -14,6 +15,7 @@ import {UploadDialogModule} from './components/upload-dialog';
         DatesRangeModule,
         ProgressBarModule,
         UploadDialogModule,
+        PrePaymentModule,
     ],
     imports: [
         CommonModule,
@@ -23,6 +25,7 @@ import {UploadDialogModule} from './components/upload-dialog';
         DatesRangeModule,
         ProgressBarModule,
         UploadDialogModule,
+        PrePaymentModule,
     ],
 })
 export class SharedModule {

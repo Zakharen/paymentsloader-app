@@ -48,13 +48,6 @@ export class PaymentsService {
             .pipe(catchError(RequestHelperService.handleError));
     }
 
-    public getAccounts() {
-        const self = this;
-        return self.http
-            .get<Account[]>(`${self.apiUrl}/api/accounts`)
-            .pipe(catchError(RequestHelperService.handleError));
-    }
-
     public announcePaymentsUpdate(status: boolean) {
         const self = this;
         self.paymentsWereUpdatedSource.next(status);
