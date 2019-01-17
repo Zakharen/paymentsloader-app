@@ -16,13 +16,14 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     CommonModule,
     MaterialModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useFactory: HttpLoaderFactory,
+    //     deps: [HttpClient]
+    //   }
+    // }),
+    TranslateModule.forChild({}),
   ],
   exports: [
     MaterialModule,

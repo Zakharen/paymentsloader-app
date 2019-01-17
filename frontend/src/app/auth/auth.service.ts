@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {RequestHelperService} from "../core/services";
+import {RequestHelperService} from '../core/services';
 
 @Injectable({
     providedIn: 'root'

@@ -7,11 +7,14 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'paymentloader-app';
-
     constructor(
         private translate: TranslateService,
     ) {
-        translate.setDefaultLang('ua');
+        if (localStorage.getItem('lang')) {
+            translate.setDefaultLang(localStorage.getItem('lang') || 'ua');
+        } else {
+            localStorage.setItem('lang', 'ua');
+            translate.setDefaultLang('ua');
+        }
     }
 }

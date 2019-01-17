@@ -16,7 +16,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class DatesRangeComponent implements OnInit, OnDestroy {
 
     public datesRangeForm: FormGroup;
-    public errorMsg = 'Date value is required!';
+    public errorMsg: string;
     @Input() isoString = false;
     @Output() formChanged: EventEmitter<FileDates> = new EventEmitter();
 
@@ -48,11 +48,11 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
                 }
             }
         );
-        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {
         const self = this;
+        self.setLocalization();
         self.initForm();
         self.filter();
     }
@@ -86,5 +86,14 @@ export class DatesRangeComponent implements OnInit, OnDestroy {
             filedatefrom: [today, Validators.required],
             filedateto: [tomorrow, Validators.required],
         });
+    }
+
+    private setLocalization() {
+        const self = this;
+        self.translate
+            .get('shared.components.datesRange.messages.fieldRequired')
+            .subscribe(values => {
+                self.errorMsg = values['shared.components.datesRange.messages.fieldRequired'];
+            });
     }
 }

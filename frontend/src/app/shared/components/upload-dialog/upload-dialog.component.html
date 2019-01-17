@@ -7,13 +7,19 @@
     <div mat-card-avatar class="example-header-logo">
         <mat-icon aria-label="File upload" color="primary" class="upload">cloud_upload</mat-icon>
     </div>
-    <mat-card-title>Upload Files</mat-card-title>
-    <mat-card-subtitle>Supported file extension: *.XLS only</mat-card-subtitle>
+    <mat-card-title>{{ 'shared.components.uploadDialog.title' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'shared.components.uploadDialog.subTitle' | translate }}</mat-card-subtitle>
 </mat-card-header>
 <mat-card-actions>
-    <button mat-raised-button color="primary" class="add-files-btn" (click)="fileInput.click()">Select File</button>
-    <button mat-button class="add-files-btn" mat-dialog-close>Cancel</button>
-    <button mat-raised-button *ngIf="selectedFile" (click)="onUpload()">Upload!</button>
+    <button mat-raised-button color="primary" class="add-files-btn" (click)="fileInput.click()">
+        {{ 'shared.components.uploadDialog.buttons.selectFile' | translate }}
+    </button>
+    <button mat-button class="add-files-btn" mat-dialog-close>
+        {{ 'shared.components.uploadDialog.buttons.cancel' | translate }}
+    </button>
+    <button mat-raised-button *ngIf="selectedFile" (click)="onUpload()">
+        {{ 'shared.components.uploadDialog.buttons.upload' | translate }}
+    </button>
 </mat-card-actions>
 <mat-card-content>
     <div *ngIf="selectedFile">
