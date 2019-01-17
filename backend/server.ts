@@ -48,37 +48,9 @@ app.use('/api/accounts', AuthHelper.verifyRequest, proxy('http://46.164.148.178:
 app.use('/api/dbfs', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => '/Payment/GetDBFExportData',
 }));
-app.use('/api/uploadwww', AuthHelper.verifyRequest, proxy('http://192.168.1.156:50048', {
-    limit: '5mb',
-    preserveHostHdr: true,
-    reqAsBuffer: true,
-    // parseReqBody: false,
-    // reqBodyEncoding: null,
-    proxyReqOptDecorator: (proxyReqOpts: any, srcReq: any) => {
-        // proxyReqOpts.headers['Content-Type'] = 'multipart/form-data';
-        // proxyReqOpts.headers['Accept'] = 'application/json';
-
-        console.log('++++++++++++++++++++++');
-        console.log('++++++++++++++++++++++');
-        console.log('++++++++++++++++++++++');
-        console.log('srcReq', srcReq.headers);
-        console.log('++++++++++++++++++++++');
-        console.log('++++++++++++++++++++++');
-
-        proxyReqOpts.headers = JSON.parse(JSON.stringify(srcReq.headers));
-
-        console.log('proxyReqOpts', proxyReqOpts.headers);
-
-        return proxyReqOpts;
-    },
-    proxyReqPathResolver: (req: any) => {
-        return '/UploadFile/UploadFile_v2';
-    }
-}));
-
-app.post('/api/upload', uploadCtrl.file);
 
 app.post('/api/login', authCtrl.login);
+app.get('/api/check', AuthHelper.verifyRequest, authCtrl.isValidUserSession);
 app.get('/api/user', AuthHelper.verifyRequest, userCtrl.users);
 app.post('/api/user', AuthHelper.verifyRequest, userCtrl.addUser);
 app.delete('/api/user/:id', AuthHelper.verifyRequest, userCtrl.deleteUser);

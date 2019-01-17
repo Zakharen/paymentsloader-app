@@ -12,6 +12,7 @@ import {MatDialog} from '@angular/material';
 export class UploaderService {
 
     private url = environment.apiUrl + '/api/upload';
+    private uploadUrl = environment.uploadApiUrl;
 
     constructor(
         public dialog: MatDialog,
@@ -82,19 +83,10 @@ export class UploaderService {
         formData.append('file', file);
 
         const headers = new HttpHeaders();
-        headers.append('content-type', undefined); // 'multipart/form-data'
-        // headers.append('Accept', 'application/json');
-        // const options = new RequestOptions({ headers: headers });
-
-        // const req = new HttpRequest('POST', self.url, formData, {
-        //     reportProgress: true
-        // });
+        headers.append('content-type', 'multipart/form-data');
 
         return self.http
-            .post(self.url, formData, { reportProgress: true, headers: headers })
+            .post(self.uploadUrl, formData, {reportProgress: true, headers: headers})
             .pipe(catchError(RequestHelperService.handleError));
-
-        // return self.http.request(req)
-        //     .pipe(catchError(RequestHelperService.handleError));
     }
 }

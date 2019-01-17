@@ -7,6 +7,7 @@ export class Auth {
     constructor(authHelper: AuthHelper) {
         this.authHelper = authHelper;
         this.login = this.login.bind(this);
+        this.isValidUserSession = this.isValidUserSession.bind(this);
     }
 
     login(req: Request, res: Response, next: NextFunction) {
@@ -20,5 +21,11 @@ export class Auth {
         const access_token = AuthHelper.createToken({email, password});
         const userCredentials = this.authHelper.getUserCredentials(email);
         res.status(200).json({access_token, userCredentials});
+    }
+
+    isValidUserSession(req: Request, res: Response, next: NextFunction) {
+        const status = 200;
+        const message = 'Result: token is valid';
+        return res.status(status).send({status, message});
     }
 }

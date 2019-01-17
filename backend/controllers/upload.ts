@@ -1,5 +1,4 @@
 import {NextFunction, Request, Response} from 'express';
-import {createReadStream} from 'fs';
 
 export class Upload {
     private form: any;
@@ -9,9 +8,7 @@ export class Upload {
         this.file = this.file.bind(this);
     }
 
-    file(req: Request, res: Response, next: NextFunction) {
-        console.log('========= upload ctrl ============');
-
+    file(req: any, res: Response, next: NextFunction) {
         try {
 
             this.form.parse(req);
@@ -23,16 +20,6 @@ export class Upload {
             this.form.on('file', (name: any, file: any) => {
                 console.log('Uploaded ' + file.name);
             });
-
-            console.log('========= upload TRY-ED ============');
-
-            // this.form.on('end', () => {
-            //     // res.json();
-            //     console.log('=== end');
-            //     const status = 200;
-            //     const message = 'Result: all files were uploaded';
-            //     return res.status(status).send({status, message});
-            // });
 
             const status = 200;
             const message = 'Result: all files were uploaded';

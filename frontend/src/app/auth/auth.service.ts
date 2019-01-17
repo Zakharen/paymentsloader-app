@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import {RequestHelperService} from "../core/services";
 
 @Injectable({
     providedIn: 'root'
@@ -34,5 +35,11 @@ export class AuthService {
                     return true;
                 })
             );
+    }
+
+    sessionCheck() {
+        return this.http
+            .get(`${environment.apiUrl}/api/check`)
+            .pipe(catchError(RequestHelperService.handleError));
     }
 }
