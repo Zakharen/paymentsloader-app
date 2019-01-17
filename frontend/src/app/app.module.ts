@@ -35,9 +35,13 @@ export function HttpLoaderFactory(http: HttpClient) {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
-            }
+            },
+            isolate: false
         }),
         AgGridModule.withComponents(null),
+    ],
+    exports: [
+        TranslateModule
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

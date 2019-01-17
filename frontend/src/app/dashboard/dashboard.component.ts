@@ -1,20 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
-
-  constructor(
-      private translate: TranslateService,
-  ) {
-    translate.setDefaultLang('ua');
-  }
-
-  ngOnInit() {
-  }
-
+export class DashboardComponent {
 }

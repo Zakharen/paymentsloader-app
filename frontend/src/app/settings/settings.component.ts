@@ -11,12 +11,12 @@ export class SettingsComponent implements OnInit {
     constructor(
         private translate: TranslateService,
     ) {
-        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {
     }
 
+    // TODO: used in case to change languages
     switchLanguage(language: string) {
         this.translate.use(language);
     }

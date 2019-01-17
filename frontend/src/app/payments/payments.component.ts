@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 import {PaymentsService} from './payments.service';
 import {Payment} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
@@ -7,6 +6,7 @@ import {FileDates} from '../shared/components/dates-range/models';
 import {LoaderService, RequestHelperService} from '../core/services';
 import {MatDialog} from '@angular/material';
 import {UploadDialogComponent} from '../shared/components/upload-dialog';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-payments',
@@ -18,6 +18,9 @@ export class PaymentsComponent implements OnInit, OnDestroy {
     public accounts: Account[] = [];
     public gridOptions;
 
+    private updateSuccess: string;
+    private updateError: string;
+
     constructor(
         public dialog: MatDialog,
         public loaderService: LoaderService,
@@ -26,11 +29,11 @@ export class PaymentsComponent implements OnInit, OnDestroy {
         private requestHelperService: RequestHelperService,
         private translate: TranslateService,
     ) {
-        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {
         const self = this;
+        self.setLocalization();
         self.getPaymentsAccounts();
         self.initGridOptions();
     }
@@ -42,7 +45,7 @@ export class PaymentsComponent implements OnInit, OnDestroy {
 
     public openUploadDialog() {
         const self = this;
-        self.dialog.open(UploadDialogComponent, {width: '40%', height: '27%'});
+        self.dialog.open(UploadDialogComponent, {width: 'auto', height: 'auto'});
     }
 
     public datesRangeChanged(dates: FileDates) {
@@ -74,10 +77,10 @@ export class PaymentsComponent implements OnInit, OnDestroy {
             .setPayment(rowData)
             .subscribe(
                 (res: any) => {
-                    self.requestHelperService.snackBarSuccess('Payment was updated!');
+                    self.requestHelperService.snackBarSuccess(self.updateSuccess);
                     self.paymentsService.announcePaymentsUpdate(true);
                 },
-                (err: any) => self.requestHelperService.snackBarWarning('Payment wasn\'t updated. Try again!'),
+                (err: any) => self.requestHelperService.snackBarWarning(self.updateError),
             );
     }
 
@@ -92,5 +95,18 @@ export class PaymentsComponent implements OnInit, OnDestroy {
     private initGridOptions() {
         const self = this;
         self.gridOptions = self.gridHelper.gridOptions;
+    }
+
+    private setLocalization() {
+        const self = this;
+        self.translate
+            .get([
+                'payments.messages.updateSuccess',
+                'payments.messages.updateError',
+            ])
+            .subscribe(values => {
+                self.updateSuccess = values['payments.messages.updateSuccess'];
+                self.updateError = values['payments.messages.updateError'];
+            });
     }
 }

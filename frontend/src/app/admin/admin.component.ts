@@ -18,17 +18,33 @@ export class AdminComponent implements OnInit {
     ];
     public registerForm: FormGroup;
 
+    private addUserSuccess: string;
+    private addUserError: string;
+    private fieldRequired: string;
+    private invalidEmail: string;
+
     constructor(
         private formBuilder: FormBuilder,
         private adminService: AdminService,
         private requestHelper: RequestHelperService,
         private translate: TranslateService,
     ) {
-        translate.setDefaultLang('ua');
     }
 
     ngOnInit() {
         const self = this;
+        self.translate.get([
+            'admin.messages.messages.addUserSuccess',
+            'admin.messages.messages.addUserError',
+            'admin.messages.messages.fieldRequired',
+            'admin.messages.messages.invalidEmail',
+        ]).subscribe(value => {
+            self.addUserSuccess = value['admin.messages.messages.addUserSuccess'];
+            self.addUserError = value['admin.messages.messages.addUserError'];
+            self.fieldRequired = value['admin.messages.messages.fieldRequired'];
+            self.invalidEmail = value['admin.messages.messages.invalidEmail'];
+        });
+
         self.registerForm = self.formBuilder.group({
             name: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
@@ -52,11 +68,14 @@ export class AdminComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 result => {
-                    self.requestHelper.snackBarSuccess('Додано новго користувача!');
+                    self.requestHelper.snackBarSuccess(self.addUserSuccess);
                     self.refreshForm();
                     self.adminService.announceUserWasAdded(true);
                 },
-                err => console.log(err)
+                err => {
+                    self.requestHelper.snackBarWarning(self.addUserError);
+                    console.log(err);
+                }
             );
     }
 
@@ -68,8 +87,8 @@ export class AdminComponent implements OnInit {
 
     getErrorMessage() {
         const self = this;
-        return self.registerForm.controls.email.hasError('required') ? 'Поле має бути заповнене' :
-            self.registerForm.controls.email.hasError('email') ? 'Невалідне значення Email' :
+        return self.registerForm.controls.email.hasError('required') ? self.fieldRequired :
+            self.registerForm.controls.email.hasError('email') ? self.invalidEmail :
                 '';
     }
 }

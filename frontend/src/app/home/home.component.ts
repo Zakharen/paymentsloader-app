@@ -2,7 +2,6 @@ import {Component, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {AuthService} from '../auth';
-import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-home',
@@ -20,10 +19,7 @@ export class HomeComponent implements OnDestroy {
         changeDetectorRef: ChangeDetectorRef,
         media: MediaMatcher,
         private router: Router,
-        private translate: TranslateService,
     ) {
-        translate.setDefaultLang('ua');
-
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
