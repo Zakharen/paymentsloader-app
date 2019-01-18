@@ -44,7 +44,7 @@ app.use('/api/payment', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8
     }
 }));
 
-app.use('/api/generate', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
+app.use('/api/pregenerate', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqBodyDecorator: (bodyContent: any, srcReq: any) => {
         return bodyContent.ids;
     },
@@ -64,6 +64,16 @@ app.use('/api/dbfs', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001
 app.use('/api/dbfUpdate', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
     proxyReqPathResolver: (req: any) => {
         return `/Payment/SetExportData?RowId=${req.body.RowId}&Narrative=${req.body.Narrative}`;
+    }
+}));
+
+app.use('/api/generate', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
+    proxyReqBodyDecorator: (bodyContent: any, srcReq: any) => {
+        console.log('bodyContent.ids', bodyContent.ids);
+        return bodyContent.ids;
+    },
+    proxyReqPathResolver: (req: any) => {
+        return `/Payment/ExportToDBF?FileName=fileName`;
     }
 }));
 

@@ -26,4 +26,10 @@ export class DbfService {
             .get<Dbf[]>(`${self.apiUrl}/api/dbfs`)
             .pipe(catchError(RequestHelperService.handleError));
     }
+
+    public generate(payload: any) {
+        return this.http
+            .post(`${this.apiUrl}/api/generate`, payload)
+            .pipe(catchError(RequestHelperService.handleError));
+    }
 }

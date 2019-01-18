@@ -5,10 +5,18 @@ export class GridHelper {
     public gridOptions = {
         columnDefs: GridHelper.getColumnsDefinitions(),
         enableColResize: true,
+        rowSelection: 'multiple',
+        suppressRowClickSelection: true,
     };
 
     private static getColumnsDefinitions() {
         return [
+            {
+                headerName: 'Генерувати',
+                headerCheckboxSelection: true,
+                headerCheckboxSelectionFilteredOnly: true,
+                checkboxSelection: true,
+            },
             {
                 headerName: 'Дії',
                 suppressSorting: true,

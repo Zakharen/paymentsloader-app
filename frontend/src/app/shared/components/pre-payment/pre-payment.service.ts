@@ -25,7 +25,7 @@ export class PrePaymentService {
 
     public createPayment(payload: any) {
         return this.http
-            .post(`${this.apiUrl}/api/generate`, payload)
+            .post(`${this.apiUrl}/api/pregenerate`, payload)
             .pipe(catchError(RequestHelperService.handleError));
     }
 }

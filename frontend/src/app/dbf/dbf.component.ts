@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import {DbfService} from './dbf.service';
-import {Dbf} from '../shared/models';
+import {Dbf, Payment} from '../shared/models';
 import {GridHelper} from './helpers/grid.helper';
 import {LoaderService, RequestHelperService} from '../core/services';
 import {EditPaymentComponent} from '../shared/components/edit-payment';
@@ -14,11 +14,13 @@ import {EditPaymentComponent} from '../shared/components/edit-payment';
 })
 export class DbfComponent implements OnInit {
     public dbfs: Dbf[] = [];
+    public rowCount: number;
     public gridOptions;
 
     private gridApi;
     private updateSuccess: string;
     private updateError: string;
+    private selectedItems: Dbf[] = [];
 
     constructor(
         public dialog: MatDialog,
@@ -51,6 +53,34 @@ export class DbfComponent implements OnInit {
         }
     }
 
+    public onSelectionChanged(event) {
+        if (event.type === 'selectionChanged') {
+            this.rowCount = event.api.getSelectedNodes().length;
+            const nodes = event.api.getSelectedNodes();
+            this.selectedItems = this.getSelectedNodesData(nodes);
+        }
+    }
+
+    public generate(event) {
+        const payload = {
+            ids: this.selectedItems.map((item: Dbf) => {
+                return {ID: item.Id};
+            }),
+        };
+        debugger;
+
+        this.dbfService
+            .generate(payload)
+            .subscribe(
+                res => {
+                    debugger;
+                },
+                err => {
+                    debugger;
+                }
+            );
+    }
+
     private openPrepaymentDialog(item: Dbf) {
         const dialogRef = this.dialog.open(EditPaymentComponent, {
             width: 'auto',
@@ -80,6 +110,19 @@ export class DbfComponent implements OnInit {
     private initGridOptions() {
         const self = this;
         self.gridOptions = self.gridHelper.gridOptions;
+    }
+
+    private getSelectedNodesData(nodes: any): Dbf[] {
+        if (nodes instanceof Array && nodes.length) {
+            try {
+                return nodes.map(node => node.data);
+            } catch (e) {
+                const errorMsg = 'AgGrid selected rows parsing error';
+                this.requestHelperService.snackBarWarning(errorMsg);
+                console.log(errorMsg, e);
+            }
+        }
+        return null;
     }
 
     private setLocalization() {
