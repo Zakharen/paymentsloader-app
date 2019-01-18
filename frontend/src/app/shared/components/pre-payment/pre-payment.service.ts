@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
 import {catchError} from 'rxjs/operators';
-import {RequestHelperService} from '../core/services';
-import {Dbf} from '../shared/models';
+import {environment} from '../../../../environments/environment';
+import {RequestHelperService} from '../../../core/services';
+import {Account} from '../../models';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DbfService {
+export class PrePaymentService {
 
     private apiUrl = environment.apiUrl;
 
@@ -17,19 +17,15 @@ export class DbfService {
     ) {
     }
 
-    /**
-     * Get all DBFs data
-     */
-    public getDBFs() {
-        const self = this;
-        return self.http
-            .get<Dbf[]>(`${self.apiUrl}/api/dbfs`)
+    public getAccounts() {
+        return this.http
+            .get<Account[]>(`${this.apiUrl}/api/accounts`)
             .pipe(catchError(RequestHelperService.handleError));
     }
 
-    public generate(payload: any) {
+    public createPayment(payload: any) {
         return this.http
-            .post(`${this.apiUrl}/api/generate`, payload)
+            .post(`${this.apiUrl}/api/pregenerate`, payload)
             .pipe(catchError(RequestHelperService.handleError));
     }
 }

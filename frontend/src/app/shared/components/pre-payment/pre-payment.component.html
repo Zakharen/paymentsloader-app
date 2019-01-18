@@ -1,0 +1,53 @@
+<mat-card-header>
+    <div mat-card-avatar class="example-header-logo">
+        <mat-icon color="primary" class="note-add">note_add</mat-icon>
+    </div>
+    <mat-card-title>{{ 'shared.components.pre-payment.title' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'shared.components.pre-payment.subTitle' | translate }}</mat-card-subtitle>
+</mat-card-header>
+
+<mat-card-content>
+
+    <form [formGroup]="form">
+        <mat-form-field class="example-full-width">
+            <mat-select placeholder="{{ 'shared.components.pre-payment.form.template' | translate }}"
+                        formControlName="templateId">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let account of accountsList" [value]="account.templateId">
+                    {{account.account}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['templateId'].hasError('required')">
+                {{ 'shared.components.pre-payment.messages.errors.required' | translate }}
+            </mat-error>
+            <mat-hint>{{form.controls['templateId'].value?.sound}}</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <textarea #narrativeMsg matInput
+                      placeholder="{{ 'shared.components.pre-payment.form.narrative' | translate }}"
+                      formControlName="narrative" required></textarea>
+
+            <mat-error *ngIf="form.controls['narrative'].invalid">
+                {{ 'shared.components.pre-payment.messages.errors.required' | translate }}
+            </mat-error>
+            <mat-hint align="start">
+                <!--{{form.controls['narrative'].value?.sound}}-->
+                <strong>{{ 'shared.components.pre-payment.messages.info.warn' | translate }}</strong>
+            </mat-hint>
+            <mat-hint align="end">{{narrativeMsg.value.length}} / 256</mat-hint>
+        </mat-form-field>
+    </form>
+
+</mat-card-content>
+
+<mat-card-actions>
+    <button mat-stroked-button class="btn" color="warn" (click)="cancel()">
+        {{ 'shared.components.pre-payment.buttons.cancel' | translate }}
+    </button>
+    <button mat-stroked-button class="btn" color="primary" type="submit" (click)="generate()"
+            [disabled]="form.invalid">
+        {{ 'shared.components.pre-payment.buttons.generate' | translate }}
+    </button>
+</mat-card-actions>
+
