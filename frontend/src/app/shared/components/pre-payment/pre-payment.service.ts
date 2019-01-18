@@ -18,9 +18,14 @@ export class PrePaymentService {
     }
 
     public getAccounts() {
-        const self = this;
-        return self.http
-            .get<Account[]>(`${self.apiUrl}/api/accounts`)
+        return this.http
+            .get<Account[]>(`${this.apiUrl}/api/accounts`)
+            .pipe(catchError(RequestHelperService.handleError));
+    }
+
+    public createPayment(payload: any) {
+        return this.http
+            .post(`${this.apiUrl}/api/generate`, payload)
             .pipe(catchError(RequestHelperService.handleError));
     }
 }

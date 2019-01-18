@@ -5,11 +5,19 @@ export class GridHelper {
     public gridOptions = {
         columnDefs: GridHelper.getColumnsDefinitions(),
         enableColResize: true,
+        rowSelection: 'multiple',
+        suppressRowClickSelection: true,
     };
 
     private static getColumnsDefinitions() {
         return [
-            {headerName: 'ЕДпоу', field: 'row_1'},
+            {
+                headerName: 'ЕДпоу',
+                field: 'row_1',
+                headerCheckboxSelection: true,
+                headerCheckboxSelectionFilteredOnly: true,
+                checkboxSelection: true,
+            },
             {headerName: 'FileName', field: 'FileName'},
             {headerName: '№ реестра валидаций', field: 'row_2'},
             {headerName: 'МФО', field: 'row_3'},

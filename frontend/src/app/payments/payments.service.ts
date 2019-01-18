@@ -19,6 +19,7 @@ export class PaymentsService {
 
     constructor(
         private http: HttpClient,
+        private requestHelperService: RequestHelperService,
     ) {
     }
 
@@ -31,6 +32,9 @@ export class PaymentsService {
         if (dates) {
             const params: any = dates;
             paramsString = `?filedatefrom=${params.filedatefrom}&filedateto=${params.filedateto}`;
+        } else {
+            self.requestHelperService.snackBarWarning('Date range is required!!!');
+            return;
         }
         return self.http
             .get<Payment[]>(`${self.apiUrl}/api/payments${paramsString}`)

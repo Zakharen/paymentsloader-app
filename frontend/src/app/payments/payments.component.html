@@ -14,7 +14,7 @@
             </mat-icon>
             {{ 'payments.page.uploadPayments' | translate }}
         </button>
-        <button class="pre-payment-btn" mat-stroked-button color="primary" (click)="openPrepaymentDialog()">
+        <button class="pre-payment-btn" mat-stroked-button color="primary" [disabled]="!rowCount" (click)="openPrepaymentDialog()">
             <mat-icon class="material-icons">
                 note_add
             </mat-icon>
@@ -29,6 +29,8 @@
             class="ag-theme-material"
             [rowData]="payments"
             (rowClicked)="rowClicked($event)"
+            (selectionChanged)="onSelectionChanged($event)"
             [gridOptions]="gridOptions"
+            (gridReady)="onGridReady($event)"
     ></ag-grid-angular>
 </mat-card>
