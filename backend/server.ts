@@ -61,6 +61,12 @@ app.use('/api/dbfs', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001
     proxyReqPathResolver: (req: any) => '/Payment/GetExportData',
 }));
 
+app.use('/api/dbfUpdate', AuthHelper.verifyRequest, proxy('http://46.164.148.178:8001', {
+    proxyReqPathResolver: (req: any) => {
+        return `/Payment/SetExportData?RowId=${req.body.RowId}&Narrative=${req.body.Narrative}`;
+    }
+}));
+
 app.post('/api/login', authCtrl.login);
 app.get('/api/check', AuthHelper.verifyRequest, authCtrl.isValidUserSession);
 app.get('/api/user', AuthHelper.verifyRequest, userCtrl.users);

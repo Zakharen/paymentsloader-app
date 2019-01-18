@@ -9,6 +9,13 @@ export class GridHelper {
 
     private static getColumnsDefinitions() {
         return [
+            {
+                headerName: 'Дії',
+                suppressSorting: true,
+                suppressFilter: true,
+                suppressNavigable: true,
+                cellRenderer: (params) => GridHelper.actionsCell(params)
+            },
             {headerName: 'CPU', field: 'CPU'},
             {headerName: 'Confirmed', field: 'Confirmed'},
             {
@@ -60,5 +67,14 @@ export class GridHelper {
             date = ' - ';
         }
         return date;
+    }
+
+    private static actionsCell(params) {
+        if (params && params.hasOwnProperty('data')) {
+            const row = params.data;
+            const style = 'margin: 12px;cursor: pointer;';
+            const icon = 'edit';
+            return `<i class="material-icons" style="${style}" data-action-type="edit">${icon}</i>`;
+        }
     }
 }

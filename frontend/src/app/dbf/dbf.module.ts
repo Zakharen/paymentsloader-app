@@ -8,6 +8,7 @@ import {CoreModule} from '../core/core.module';
 import {AgGridModule} from 'ag-grid-angular';
 import {GridHelper} from './helpers/grid.helper';
 import {SharedModule} from '../shared/shared.module';
+import {EditPaymentComponent} from '../shared/components/edit-payment';
 
 @NgModule({
     declarations: [DbfComponent],
@@ -18,6 +19,9 @@ import {SharedModule} from '../shared/shared.module';
         SharedModule,
         DbfRoutingModule,
         AgGridModule.withComponents([DbfComponent]),
+    ],
+    entryComponents: [
+        EditPaymentComponent,
     ],
     providers: [
         DbfService,
