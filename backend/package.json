@@ -2,7 +2,7 @@
   "name": "paymentsloader-app",
   "version": "1.0.0",
   "description": "Payments loader application",
-  "main": "lib/server.js",
+  "main": "server.js",
   "scripts": {
     "serve": "ts-node-dev server.ts",
     "build": "npm run clean && tsc && npm run copy",
