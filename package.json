@@ -2,7 +2,7 @@
   "name": "paymentsloader-app",
   "version": "1.0.0",
   "description": "Payments loader application",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "serve": "concurrently \"npm run client\" \"npm run server\"",
     "client": "cd frontend && ng serve --configuration=production",
