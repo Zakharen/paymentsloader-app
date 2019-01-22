@@ -16,7 +16,8 @@
     "install:client": "cd frontend && npm i",
     "install:server": "cd backend && npm i",
     "install:app": "npm i && npm run install:client && npm run install:server",
-    "start:prod": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run start:prod\""
+    "start:prod": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run start:prod\"",
+    "start:app": "cd backend && node server.js"
   },
   "keywords": [
     "Huspi"

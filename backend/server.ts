@@ -83,6 +83,8 @@ app.get('/api/user', AuthHelper.verifyRequest, userCtrl.users);
 app.post('/api/user', AuthHelper.verifyRequest, userCtrl.addUser);
 app.delete('/api/user/:id', AuthHelper.verifyRequest, userCtrl.deleteUser);
 
+app.use('/', express.static(__dirname + '/../frontend/dist/paymentloader-app'));
+
 // start our server on port 4201
 app.listen(4201, () => {
     console.log('Server now listening on 4201');
